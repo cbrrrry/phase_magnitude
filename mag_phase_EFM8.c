@@ -1,3 +1,4 @@
+
 /*HR_monitor.c 
 Carson Berry, Abdo Elhosary, Jason Fakidis
 Code to interpret the schmidt trigger-filtered signal of someone's HR through their finger. 
@@ -19,15 +20,19 @@ Should be coupled with a finger-sensor that utilizes IR radiation and it's diffe
 #define LCD_E  P2_5
 #define LCD_D4 P2_4
 #define LCD_D5 P2_3
+
 #define LCD_D6 P2_2
 #define LCD_D7 P2_1
 
 #define input P2_0 
 #define CHARS_PER_LINE 16
-#define sample_size 6
+#define sample_size 5
+#define VDD 3.3035 // The measured value of VDD in volts
+#define ref_logic_pin P2_0
+#define	test_logic_pin P1_7
 
 
-unsigned char overflow_count;
+long int overflow_count;
 char _c51_external_startup (void)
 {
 	// Disable Watchdog with key sequence
@@ -270,40 +275,207 @@ float Volts_at_Pin(unsigned char pin)
 	 return ((ADC_at_Pin(pin)*VDD)/16383.0);
 }
 
-int Get_Period (unsigned char pin)
+void InitADC (void)
 {
-	unsigned int period;
-	unsigned int overflow_count;
+	SFRPAGE = 0x00;
+	ADC0CN1 = 0b_10_000_000; //14-bit,  Right justified no shifting applied, perform and Accumulate 1 conversion.
+	ADC0CF0 = 0b_11111_0_00; // SYSCLK/32
+	ADC0CF1 = 0b_0_0_011110; // Same as default for now
+	ADC0CN0 = 0b_0_0_0_0_0_00_0; // Same as default for now
+	ADC0CF2 = 0b_0_01_11111 ; // GND pin, Vref=VDD
+	ADC0CN2 = 0b_0_000_0000;  // Same as default for now. ADC0 conversion initiated on write of 1 to ADBUSY.
+	ADEN=1; // Enable ADC
+}
 
-	// Reset the counter
-	TL0=0; 
-	TH0=0;
-	TF0=0;
-	overflow_count=0;
-	
-	while(pin!=0); // Wait for the signal to be zero
-	while(pin!=1); // Wait for the signal to be one
-	TR0=1; // Start the timer
-	while(pin!=0) // Wait for the signal to be zero
-	{
-		if(TF0==1) // Did the 16-bit timer overflow?
-		{
+float Get_Period_ref (void)
+{
+	float period=0;
+			
+			// Reset the counter
+			TL0=0; 
+			TH0=0;
 			TF0=0;
-			overflow_count++;
-		}
-	}
-	while(pin!=1) // Wait for the signal to be one
-	{
-		if(TF0==1) // Did the 16-bit timer overflow?
-		{
-			TF0=0;
-			overflow_count++;
-		}
-	}
-	TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
-	period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-	
+			overflow_count=0;
+					while(ref_logic_pin!=0); // Wait for the signal to be zero
+					while(ref_logic_pin!=1); // Wait for the signal to be one		
+					TR0=1; // Start the timer
+					while(ref_logic_pin!=0) // Wait for the signal to be zero
+					{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+					}
+					while(ref_logic_pin!=1) // Wait for the signal to be one
+					{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+					}
+					TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+					period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*1000;
+		    	
+		
+
 	return period;
+
+}
+
+float Get_Period_test (void)
+{
+	float period=0;
+
+			
+			// Reset the counter
+			TL0=0; 
+			TH0=0;
+			TF0=0;
+			overflow_count=0;
+					while(test_logic_pin!=0); // Wait for the signal to be zero
+					Timer3us(90);
+					while(test_logic_pin!=0);
+
+					while(test_logic_pin!=1); // Wait for the signal to be one
+					Timer3us(90);
+					while(test_logic_pin!=1);
+
+					TR0=1; // Start the timer
+					while(test_logic_pin!=0) // Wait for the signal to be zero
+					{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+					}
+					while(test_logic_pin!=1) // Wait for the signal to be one
+					{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+					}
+					TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+					period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*1000;
+		    
+	return period;
+
+}
+
+float Get_ref_peak(float period){ 
+		 int peak_period_us=period*1000/4;
+		 int peak_period_ms=period/4; 
+		 float peak_ref_voltage; 
+		 			
+					while(ref_logic_pin!=0); // Wait for the signal to be zero
+					while(ref_logic_pin!=1); // Wait for the signal to be one
+					{
+					waitms(peak_period_ms);
+					Timer3us(peak_period_us);
+					peak_ref_voltage = Volts_at_Pin(QFP32_MUX_P1_5); //ref
+				//	printf("refPeak mstime: %i\n", peak_period_ms); 
+				//	printf("refPeak ustime: %i\n", peak_period_us); 
+			
+					}
+	return peak_ref_voltage;
+		 }
+		 
+float Get_test_peak(float period){ 
+		 int peak_period_us=period*1000/4; 
+		 int peak_period_ms=period/4; 
+		 float peak_test_voltage; 
+		 
+					while(test_logic_pin!=0); // Wait for the signal to be zero
+					while(test_logic_pin!=1); // Wait for the signal to be one
+					{
+					waitms(peak_period_ms);
+					Timer3us(peak_period_us);
+					peak_test_voltage = Volts_at_Pin(QFP32_MUX_P1_6); //ref
+				
+					}
+	return peak_test_voltage;
+		 }
+
+
+/*
+Calculates the phase difference by finding whichever signal goes positive first, starting timer0 when that signal goes positive, and stopping the timer when the second signal goes positive. 
+The phase is calculated by: 
+
+timed_diff*360/period
+
+*/
+int Get_Phase_diff (float period)
+{
+	int phase_diff=0;
+	float timed_diff=0;
+	int flag0=0;
+	volatile int flag=0; 		//when flag=1, reference was set first. When flag=-1, test was set first 
+	
+			
+			// Reset the counter
+			TL0=0; 
+			TH0=0;
+			TF0=0;
+			overflow_count=0;
+
+					while(flag0==0){					//Wait until both pins are zero. 
+						if((ref_logic_pin==0)&&(test_logic_pin==0)){
+							flag0=1;
+						}}
+			
+
+					while(flag==0){			// check if either signal goes positive, and when it does, set a specific flag
+							if(ref_logic_pin==1)
+									flag=1; 
+							if(test_logic_pin==1)
+									flag=-1; 
+					}
+			
+					
+					if (flag==1){
+						TR0=1; // Start the timer
+						while(test_logic_pin!=1) // Wait for the signal to be zero
+						{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+						}
+					}
+					else if(flag==-1){
+						TR0=1; // Start the timer
+						while(ref_logic_pin!=1) // Wait for the signal to be zero
+						{
+						if(TF0==1) // Did the 16-bit timer overflow?
+						{
+							TF0=0;
+							overflow_count++;
+						}
+						}
+					}
+					TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+					timed_diff=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*1000;
+
+
+					phase_diff=timed_diff*360/period;
+		    
+		    		    		
+		    //our current circuit with cap .01 uF maps to a linera phase output between -113 and 73 deg. The cap value was found to effect this phase difference. 
+			// This section intended to rectify this difference to 0 to 180
+		    /*	if(flag==-1){
+		    	//phase_diff=phase_diff;
+
+		    	}
+		    	else{
+		    	 phase_diff=phase_diff;
+		    	}*/
+
+		    	return phase_diff; 
 
 }
 
@@ -315,24 +487,68 @@ void TIMER0_Init(void)
 	TR0=0; // Stop Timer/Counter 0
 }
 
+
+float get_max(float *array, int array_size){
+
+	int i; 
+	float current=0; 
+	float max=array[0]; 
+
+	for(i=0; i<array_size; i++){
+		
+		current=array[i];
+
+		if (current>max){
+			max=current;
+			}
+			}
+			
+	return max;
+}
+
+
+
+/*A program to measure the frequency, peak voltage, and phase difference between two 
+analog sinusoidal signals. 
+Period values are stored in ms. 
+Phase is in degrees. 
+Voltage is in rms. 
+
+Zero cross comparator: 
+Ref: Pin 2_0
+Test: Pin 1_7
+
+Positive (greater than 0 only) Analog signals: 
+Ref: Pin 1_5
+Test: Pin 1_6
+
+
+*/
 void main (void) 
 {
+	float phase_diff=0.0;
+	float Vrms_ref=0.0;
+	float Vrms_test=0;
 
-	// char buff[17];
-	float period=0.0;
-	float bpm=0.0;
-	float mem=0.0;
-	int unstable=0;
-	int bpm_int=0;
 	int count=0;
-	float sum=0.0;
-	char * bpm_string=NULL;
+	int length=0;
 
-	float Period1;
-	float Period2;
-	float v[4];
+	float Period_ref=0;
+	float Period_test=0;
+	int phase_diff_int=0;
+	char* phase_string=NULL;
+	//float p_ref[sample_size+1];
+	//float p_test[sample_size+1];
 	
+
+	//long int overflow_count;
+	//int count; 
+	//float period_array[sample_size]={0};
+
+
 	TIMER0_Init();
+	// Configure the LCD
+	LCD_4BIT();
 
 	waitms(500); // Give PuTTY a chance to start.
 	printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
@@ -342,98 +558,70 @@ void main (void)
 	        "Compiled: %s, %s\n\n",
 	        __FILE__, __DATE__, __TIME__);
 	
-	InitPinADC(2, 2); // Configure P2.2 as analog input
-	InitPinADC(2, 3); // Configure P2.3 as analog input
-	InitPinADC(2, 4); // Configure P2.4 as analog input
-	InitPinADC(2, 5); // Configure P2.5 as analog input
+	InitPinADC(1, 5); // Configure P2.2 as analog input
+	InitPinADC(1, 6); // Configure P2.3 as analog input
     InitADC();
     
-    Period1 = Get_Period(P2_1);
-    Period2 = Get_Period(P2_2);
-	 
+ 
+	 //forever loop 
 	 while (1)
     {
-    	
-    	
-		if(P2_2<=1)
-		{
+    	/*//get 5 period measurements
+    	 for(i=0; i<sample_size; i++){
+	    	 p_ref[i]= Get_Period_ref(); 
+	    	 p_test[i]= Get_Period_test();
+	    	// printf("get_period_test: %lf\n", p_test[i]);
+	    	};*/
+    		//takes max value in those 5 measurements
+    	  Period_ref = Get_Period_ref(); //get_max(p_ref, sample_size);
+    	  Period_test =Get_Period_test();// get_max(p_test, sample_size);
+
+
+		 
+		// if(Period_test-Period_ref<=1||Period_ref-Period_test<=1){ //proceed with analysis, as the signals are likely the same frequency 
+		 
+		 Vrms_ref= Get_ref_peak(Period_ref)/1.41421356; //wait 1/4 period and sample voltage, divide peak/sqrt(2)
+		 Vrms_test= Get_test_peak(Period_test)/1.41421356;
+		 
+
+		 phase_diff_int= Get_Phase_diff (16.666666);//(Period_ref)+Period_test)/2);
+		
+		
 			// Read 14-bit value from the pins configured as analog inputs
-			v[0] = Volts_at_Pin(QFP32_MUX_P2_2);
-			v[1] = Volts_at_Pin(QFP32_MUX_P2_3);
-			v[2] = Volts_at_Pin(QFP32_MUX_P2_4);
-			v[3] = Volts_at_Pin(QFP32_MUX_P2_5);
-			printf ("V@P2.2=%7.5fV, V@P2.3=%7.5fV, V@P2.4=%7.5fV, V@P2.5=%7.5fV, Period1=%lf, Period2=%lf\r", v[0], v[1], v[2], v[3], Period1, Period2);
-			//waitms(500);
-		}
+			//v[0] = Volts_at_Pin(QFP32_MUX_P1_5); //ref
+			//v[1] = Volts_at_Pin(QFP32_MUX_P1_6); //test
+			printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+			printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);	
+			
+			
+				printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
+			
+			 count=0;
+		 while(phase_diff_int)
+				{
+					phase_string[count] = 48+phase_diff_int%10;
+					phase_diff_int /= 10;
+					count++;
+				}
+			
+			//LCDprint(phase_string, 2, 1);
+		//	LCDprint("Signal 2", 2, 1);
 
-	//Initialize Timer0 to be used to count the period
-	TIMER0_Init();
-
-	// Configure the LCD
-	LCD_4BIT();
+			LCDprint_inv(phase_string, 1, 1);
+			waitms(500);
+		
+		//
+		
+	//	}
+		//Needs to print to SPI, Magnitude_test, Magnitude_ref, Phase_difference
 
 	// Display something in the LCD
 	//		  1234567890123456
-	LCDprint("Signal 1", 1, 1);
-	LCDprint("Signal 2", 2, 1);
 
-	// Wait for user to comply. Give putty a chance to start
-	waitms(1000);
 
-	printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-
-/*	printf ("EFM8 BPM measurement at pin P2.0 using Timer 0.\n"
-	        "File: %s\n"
-	        "Compiled: %s, %s\n\n",
-	        __FILE__, __DATE__, __TIME__);
-*/
-
-/*
-	 while (1)
-    {
-   
-		if(!unstable)
-			{
-				if(bpm >= 40 && bpm <= 180) 
-					{mem = bpm; unstable=1;}
-
-				else {printf("\rNot stable yet"); 
-					LCDprint("HR Not Stable", 2, 1); continue;}
-			} 
-
-			//filters out errant HR measurements to smooth out signal. 
-		if(bpm >= 50 && bpm <= 180 && ((bpm-mem) < 40 || (mem-bpm) < 40))
-				{
-					mem = bpm;
-				}
-			else bpm = mem;
-		
-		// Send the period to the serial port
-		//Averages current and last bpm measurement
-			sum=bpm+mem; 
-			bpm=sum/2; 
-
-		bpm_int = (int) bpm;
-		printf( "%d\r\n" , bpm_int);
-		count = 0;	
-	 
-
-		while(bpm_int)
-		{
-			bpm_string[count] = 48+bpm_int%10;
-			bpm_int /= 10;
-			count++;
-		}
-		bpm_string[count]='\0';
-				LCDprint("BPM:", 1, 1);
-				
-				
-				LCDprint_inv(bpm_string, 2, 1);
-*/
     }
  }
 
-}
     
 	
 
