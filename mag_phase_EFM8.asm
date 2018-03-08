@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1069 (Apr 23 2015) (MSVC)
-; This file was generated Thu Mar 08 12:31:45 2018
+; This file was generated Thu Mar 08 13:55:51 2018
 ;--------------------------------------------------------
 $name mag_phase_EFM8
 $optc51 --model-small
@@ -523,21 +523,27 @@ _Get_Phase_diff_flag_1_77:
 	ds 2
 _get_max_PARM_2:
 	ds 2
-_get_max_array_1_89:
+_get_max_array_1_90:
 	ds 3
-_get_max_max_1_90:
+_get_max_max_1_91:
 	ds 4
-_main_Vrms_ref_1_94:
+_main_Vrms_ref_1_95:
 	ds 4
-_main_Vrms_test_1_94:
+_main_Vrms_test_1_95:
 	ds 4
-_main_Period_ref_1_94:
+_main_Period_ref_1_95:
 	ds 4
-_main_Period_test_1_94:
+_main_Period_test_1_95:
 	ds 4
-_main_phase_diff_int_1_94:
+_main_phase_diff_int_1_95:
 	ds 2
-_main_phase_string_1_94:
+_main_phase_string_1_95:
+	ds 3
+_main_Vrms_test_int_1_95:
+	ds 2
+_main_Vrms_ref_int_1_95:
+	ds 2
+_main_sloc0_1_0:
 	ds 3
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
@@ -2057,7 +2063,7 @@ L020004?:
 ;Allocation info for local variables in function 'Get_Phase_diff'
 ;------------------------------------------------------------
 ;period                    Allocated with name '_Get_Phase_diff_period_1_76'
-;phase_diff                Allocated to registers 
+;phase_diff                Allocated to registers r2 r3 
 ;timed_diff                Allocated to registers r2 r3 r4 r5 
 ;flag0                     Allocated to registers r6 r7 
 ;flag                      Allocated with name '_Get_Phase_diff_flag_1_77'
@@ -2123,13 +2129,13 @@ L021008?:
 L021013?:
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:439: if (flag==1){
 	mov	a,#0x01
-	cjne	a,_Get_Phase_diff_flag_1_77,L021053?
+	cjne	a,_Get_Phase_diff_flag_1_77,L021056?
 	clr	a
-	cjne	a,(_Get_Phase_diff_flag_1_77 + 1),L021053?
-	sjmp	L021054?
-L021053?:
+	cjne	a,(_Get_Phase_diff_flag_1_77 + 1),L021056?
+	sjmp	L021057?
+L021056?:
 	sjmp	L021027?
-L021054?:
+L021057?:
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:440: TR0=1; // Start the timer
 	setb	_TR0
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:441: while(test_logic_pin!=1) // Wait for the signal to be zero
@@ -2137,9 +2143,9 @@ L021016?:
 	jb	_P1_7,L021028?
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:443: if(TF0==1) // Did the 16-bit timer overflow?
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:445: TF0=0;
-	jbc	_TF0,L021056?
+	jbc	_TF0,L021059?
 	sjmp	L021016?
-L021056?:
+L021059?:
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:446: overflow_count++;
 	inc	_overflow_count
 	clr	a
@@ -2163,9 +2169,9 @@ L021021?:
 	jb	_P2_0,L021028?
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:454: if(TF0==1) // Did the 16-bit timer overflow?
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:456: TF0=0;
-	jbc	_TF0,L021060?
+	jbc	_TF0,L021063?
 	sjmp	L021021?
-L021060?:
+L021063?:
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:457: overflow_count++;
 	inc	_overflow_count
 	clr	a
@@ -2333,54 +2339,77 @@ L021028?:
 	mov	dph,r3
 	mov	b,r4
 	mov	a,r5
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:478: return phase_diff; 
-	ljmp	___fs2sint
+	lcall	___fs2sint
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:470: if(flag==1){
+	mov	a,#0x01
+	cjne	a,_Get_Phase_diff_flag_1_77,L021064?
+	clr	a
+	cjne	a,(_Get_Phase_diff_flag_1_77 + 1),L021064?
+	sjmp	L021065?
+L021064?:
+	sjmp	L021030?
+L021065?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:471: phase_diff=-phase_diff;
+	clr	c
+	clr	a
+	subb	a,r2
+	mov	r2,a
+	clr	a
+	subb	a,r3
+	mov	r3,a
+L021030?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:476: return phase_diff; 
+	mov	dpl,r2
+	mov	dph,r3
+	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'TIMER0_Init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:483: void TIMER0_Init(void)
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:481: void TIMER0_Init(void)
 ;	-----------------------------------------
 ;	 function TIMER0_Init
 ;	-----------------------------------------
 _TIMER0_Init:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:485: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:483: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	anl	_TMOD,#0xF0
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:486: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit timer
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:484: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit timer
 	orl	_TMOD,#0x01
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:487: TR0=0; // Stop Timer/Counter 0
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:485: TR0=0; // Stop Timer/Counter 0
 	clr	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'get_max'
 ;------------------------------------------------------------
 ;array_size                Allocated with name '_get_max_PARM_2'
-;array                     Allocated with name '_get_max_array_1_89'
+;array                     Allocated with name '_get_max_array_1_90'
 ;i                         Allocated to registers r1 r2 
 ;current                   Allocated to registers r3 r4 r5 r6 
-;max                       Allocated with name '_get_max_max_1_90'
+;max                       Allocated with name '_get_max_max_1_91'
 ;------------------------------------------------------------
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:491: float get_max(float *array, int array_size){
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:489: float get_max(float *array, int array_size){
 ;	-----------------------------------------
 ;	 function get_max
 ;	-----------------------------------------
 _get_max:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:495: float max=array[0]; 
-	mov	_get_max_array_1_89,dpl
-	mov	(_get_max_array_1_89 + 1),dph
-	mov	(_get_max_array_1_89 + 2),b
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:493: float max=array[0]; 
+	mov	_get_max_array_1_90,dpl
+	mov	(_get_max_array_1_90 + 1),dph
+	mov	(_get_max_array_1_90 + 2),b
 	lcall	__gptrget
-	mov	_get_max_max_1_90,a
+	mov	_get_max_max_1_91,a
 	inc	dptr
 	lcall	__gptrget
-	mov	(_get_max_max_1_90 + 1),a
+	mov	(_get_max_max_1_91 + 1),a
 	inc	dptr
 	lcall	__gptrget
-	mov	(_get_max_max_1_90 + 2),a
+	mov	(_get_max_max_1_91 + 2),a
 	inc	dptr
 	lcall	__gptrget
-	mov	(_get_max_max_1_90 + 3),a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:497: for(i=0; i<array_size; i++){
+	mov	(_get_max_max_1_91 + 3),a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:495: for(i=0; i<array_size; i++){
 	mov	r1,#0x00
 	mov	r2,#0x00
 L023003?:
@@ -2393,7 +2422,7 @@ L023003?:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	L023006?
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:499: current=array[i];
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:497: current=array[i];
 	mov	ar3,r1
 	mov	a,r2
 	xch	a,r3
@@ -2406,12 +2435,12 @@ L023003?:
 	rlc	a
 	mov	r4,a
 	mov	a,r3
-	add	a,_get_max_array_1_89
+	add	a,_get_max_array_1_90
 	mov	r3,a
 	mov	a,r4
-	addc	a,(_get_max_array_1_89 + 1)
+	addc	a,(_get_max_array_1_90 + 1)
 	mov	r4,a
-	mov	r5,(_get_max_array_1_89 + 2)
+	mov	r5,(_get_max_array_1_90 + 2)
 	mov	dpl,r3
 	mov	dph,r4
 	mov	b,r5
@@ -2426,17 +2455,17 @@ L023003?:
 	inc	dptr
 	lcall	__gptrget
 	mov	r6,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:501: if (current>max){
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:499: if (current>max){
 	push	ar2
 	push	ar3
 	push	ar4
 	push	ar5
 	push	ar6
 	push	ar1
-	push	_get_max_max_1_90
-	push	(_get_max_max_1_90 + 1)
-	push	(_get_max_max_1_90 + 2)
-	push	(_get_max_max_1_90 + 3)
+	push	_get_max_max_1_91
+	push	(_get_max_max_1_91 + 1)
+	push	(_get_max_max_1_91 + 2)
+	push	(_get_max_max_1_91 + 3)
 	mov	dpl,r3
 	mov	dph,r4
 	mov	b,r5
@@ -2454,56 +2483,60 @@ L023003?:
 	pop	ar2
 	mov	a,r7
 	jz	L023005?
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:502: max=current;
-	mov	_get_max_max_1_90,r3
-	mov	(_get_max_max_1_90 + 1),r4
-	mov	(_get_max_max_1_90 + 2),r5
-	mov	(_get_max_max_1_90 + 3),r6
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:500: max=current;
+	mov	_get_max_max_1_91,r3
+	mov	(_get_max_max_1_91 + 1),r4
+	mov	(_get_max_max_1_91 + 2),r5
+	mov	(_get_max_max_1_91 + 3),r6
 L023005?:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:497: for(i=0; i<array_size; i++){
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:495: for(i=0; i<array_size; i++){
 	inc	r1
 	cjne	r1,#0x00,L023015?
 	inc	r2
 L023015?:
 	ljmp	L023003?
 L023006?:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:506: return max;
-	mov	dpl,_get_max_max_1_90
-	mov	dph,(_get_max_max_1_90 + 1)
-	mov	b,(_get_max_max_1_90 + 2)
-	mov	a,(_get_max_max_1_90 + 3)
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:504: return max;
+	mov	dpl,_get_max_max_1_91
+	mov	dph,(_get_max_max_1_91 + 1)
+	mov	b,(_get_max_max_1_91 + 2)
+	mov	a,(_get_max_max_1_91 + 3)
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;phase_diff                Allocated to registers 
-;Vrms_ref                  Allocated with name '_main_Vrms_ref_1_94'
-;Vrms_test                 Allocated with name '_main_Vrms_test_1_94'
-;count                     Allocated to registers r2 r3 
+;Vrms_ref                  Allocated with name '_main_Vrms_ref_1_95'
+;Vrms_test                 Allocated with name '_main_Vrms_test_1_95'
+;count                     Allocated to registers r3 r2 
 ;length                    Allocated to registers 
-;Period_ref                Allocated with name '_main_Period_ref_1_94'
-;Period_test               Allocated with name '_main_Period_test_1_94'
-;phase_diff_int            Allocated with name '_main_phase_diff_int_1_94'
-;phase_string              Allocated with name '_main_phase_string_1_94'
+;Period_ref                Allocated with name '_main_Period_ref_1_95'
+;Period_test               Allocated with name '_main_Period_test_1_95'
+;phase_diff_int            Allocated with name '_main_phase_diff_int_1_95'
+;phase_string              Allocated with name '_main_phase_string_1_95'
+;neg_flag                  Allocated to registers r2 r3 
+;Vrms_test_int             Allocated with name '_main_Vrms_test_int_1_95'
+;Vrms_ref_int              Allocated with name '_main_Vrms_ref_int_1_95'
+;sloc0                     Allocated with name '_main_sloc0_1_0'
 ;------------------------------------------------------------
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:527: void main (void) 
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:525: void main (void) 
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:539: char* phase_string=NULL;
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:537: char* phase_string=NULL;
 	clr	a
-	mov	_main_phase_string_1_94,a
-	mov	(_main_phase_string_1_94 + 1),a
-	mov	(_main_phase_string_1_94 + 2),a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:549: TIMER0_Init();
+	mov	_main_phase_string_1_95,a
+	mov	(_main_phase_string_1_95 + 1),a
+	mov	(_main_phase_string_1_95 + 2),a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:548: TIMER0_Init();
 	lcall	_TIMER0_Init
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:551: LCD_4BIT();
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:550: LCD_4BIT();
 	lcall	_LCD_4BIT
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:553: waitms(500); // Give PuTTY a chance to start.
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:552: waitms(500); // Give PuTTY a chance to start.
 	mov	dptr,#0x01F4
 	lcall	_waitms
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:554: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:553: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -2514,8 +2547,8 @@ _main:
 	dec	sp
 	dec	sp
 	dec	sp
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:559: __FILE__, __DATE__, __TIME__);
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:558: "Compiled: %s, %s\n\n",
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:558: __FILE__, __DATE__, __TIME__);
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:557: "Compiled: %s, %s\n\n",
 	mov	a,#__str_4
 	push	acc
 	mov	a,#(__str_4 >> 8)
@@ -2544,40 +2577,40 @@ _main:
 	mov	a,sp
 	add	a,#0xf4
 	mov	sp,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:561: InitPinADC(1, 5); // Configure P2.2 as analog input
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:560: InitPinADC(1, 5); // Configure P2.2 as analog input
 	mov	_InitPinADC_PARM_2,#0x05
 	mov	dpl,#0x01
 	lcall	_InitPinADC
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:562: InitPinADC(1, 6); // Configure P2.3 as analog input
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:561: InitPinADC(1, 6); // Configure P2.3 as analog input
 	mov	_InitPinADC_PARM_2,#0x06
 	mov	dpl,#0x01
 	lcall	_InitPinADC
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:563: InitADC();
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:562: InitADC();
 	lcall	_InitADC
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:567: while (1)
-L024005?:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:576: Period_ref = Get_Period_ref(); //get_max(p_ref, sample_size);
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:566: while (1)
+L024016?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:575: Period_ref = Get_Period_ref(); //get_max(p_ref, sample_size);
 	lcall	_Get_Period_ref
-	mov	_main_Period_ref_1_94,dpl
-	mov	(_main_Period_ref_1_94 + 1),dph
-	mov	(_main_Period_ref_1_94 + 2),b
-	mov	(_main_Period_ref_1_94 + 3),a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:577: Period_test =Get_Period_test();// get_max(p_test, sample_size);
+	mov	_main_Period_ref_1_95,dpl
+	mov	(_main_Period_ref_1_95 + 1),dph
+	mov	(_main_Period_ref_1_95 + 2),b
+	mov	(_main_Period_ref_1_95 + 3),a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:576: Period_test =Get_Period_test();// get_max(p_test, sample_size);
 	lcall	_Get_Period_test
-	mov	_main_Period_test_1_94,dpl
-	mov	(_main_Period_test_1_94 + 1),dph
-	mov	(_main_Period_test_1_94 + 2),b
-	mov	(_main_Period_test_1_94 + 3),a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:583: Vrms_ref= Get_ref_peak(Period_ref)/1.41421356; //wait 1/4 period and sample voltage, divide peak/sqrt(2)
-	mov	dpl,_main_Period_ref_1_94
-	mov	dph,(_main_Period_ref_1_94 + 1)
-	mov	b,(_main_Period_ref_1_94 + 2)
-	mov	a,(_main_Period_ref_1_94 + 3)
+	mov	_main_Period_test_1_95,dpl
+	mov	(_main_Period_test_1_95 + 1),dph
+	mov	(_main_Period_test_1_95 + 2),b
+	mov	(_main_Period_test_1_95 + 3),a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:582: Vrms_ref= Get_ref_peak(Period_ref)/1.41421356; //wait 1/4 period and sample voltage, divide peak/sqrt(2)
+	mov	dpl,_main_Period_ref_1_95
+	mov	dph,(_main_Period_ref_1_95 + 1)
+	mov	b,(_main_Period_ref_1_95 + 2)
+	mov	a,(_main_Period_ref_1_95 + 3)
 	lcall	_Get_ref_peak
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r1,a
+	mov	r0,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
 	mov	a,#0xF3
 	push	acc
 	mov	a,#0x04
@@ -2586,28 +2619,28 @@ L024005?:
 	push	acc
 	mov	a,#0x3F
 	push	acc
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r1
+	mov	dpl,r0
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
 	lcall	___fsdiv
-	mov	_main_Vrms_ref_1_94,dpl
-	mov	(_main_Vrms_ref_1_94 + 1),dph
-	mov	(_main_Vrms_ref_1_94 + 2),b
-	mov	(_main_Vrms_ref_1_94 + 3),a
+	mov	_main_Vrms_ref_1_95,dpl
+	mov	(_main_Vrms_ref_1_95 + 1),dph
+	mov	(_main_Vrms_ref_1_95 + 2),b
+	mov	(_main_Vrms_ref_1_95 + 3),a
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:584: Vrms_test= Get_test_peak(Period_test)/1.41421356;
-	mov	dpl,_main_Period_test_1_94
-	mov	dph,(_main_Period_test_1_94 + 1)
-	mov	b,(_main_Period_test_1_94 + 2)
-	mov	a,(_main_Period_test_1_94 + 3)
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:583: Vrms_test= Get_test_peak(Period_test)/1.41421356;
+	mov	dpl,_main_Period_test_1_95
+	mov	dph,(_main_Period_test_1_95 + 1)
+	mov	b,(_main_Period_test_1_95 + 2)
+	mov	a,(_main_Period_test_1_95 + 3)
 	lcall	_Get_test_peak
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r1,a
+	mov	r1,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
 	mov	a,#0xF3
 	push	acc
 	mov	a,#0x04
@@ -2616,25 +2649,25 @@ L024005?:
 	push	acc
 	mov	a,#0x3F
 	push	acc
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r1
+	mov	dpl,r1
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
 	lcall	___fsdiv
-	mov	_main_Vrms_test_1_94,dpl
-	mov	(_main_Vrms_test_1_94 + 1),dph
-	mov	(_main_Vrms_test_1_94 + 2),b
-	mov	(_main_Vrms_test_1_94 + 3),a
+	mov	_main_Vrms_test_1_95,dpl
+	mov	(_main_Vrms_test_1_95 + 1),dph
+	mov	(_main_Vrms_test_1_95 + 2),b
+	mov	(_main_Vrms_test_1_95 + 3),a
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:587: phase_diff_int= Get_Phase_diff (16.666666);//(Period_ref)+Period_test)/2);
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:586: phase_diff_int= Get_Phase_diff (16.6666666666);//(Period_ref)+Period_test)/2);
 	mov	dptr,#0x5555
 	mov	b,#0x85
 	mov	a,#0x41
 	lcall	_Get_Phase_diff
-	mov	_main_phase_diff_int_1_94,dpl
-	mov	(_main_phase_diff_int_1_94 + 1),dph
+	mov	_main_phase_diff_int_1_95,dpl
+	mov	(_main_phase_diff_int_1_95 + 1),dph
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:593: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
@@ -2647,24 +2680,24 @@ L024005?:
 	dec	sp
 	dec	sp
 ;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:594: printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);	
-	push	_main_phase_diff_int_1_94
-	push	(_main_phase_diff_int_1_94 + 1)
-	push	_main_Period_test_1_94
-	push	(_main_Period_test_1_94 + 1)
-	push	(_main_Period_test_1_94 + 2)
-	push	(_main_Period_test_1_94 + 3)
-	push	_main_Period_ref_1_94
-	push	(_main_Period_ref_1_94 + 1)
-	push	(_main_Period_ref_1_94 + 2)
-	push	(_main_Period_ref_1_94 + 3)
-	push	_main_Vrms_test_1_94
-	push	(_main_Vrms_test_1_94 + 1)
-	push	(_main_Vrms_test_1_94 + 2)
-	push	(_main_Vrms_test_1_94 + 3)
-	push	_main_Vrms_ref_1_94
-	push	(_main_Vrms_ref_1_94 + 1)
-	push	(_main_Vrms_ref_1_94 + 2)
-	push	(_main_Vrms_ref_1_94 + 3)
+	push	_main_phase_diff_int_1_95
+	push	(_main_phase_diff_int_1_95 + 1)
+	push	_main_Period_test_1_95
+	push	(_main_Period_test_1_95 + 1)
+	push	(_main_Period_test_1_95 + 2)
+	push	(_main_Period_test_1_95 + 3)
+	push	_main_Period_ref_1_95
+	push	(_main_Period_ref_1_95 + 1)
+	push	(_main_Period_ref_1_95 + 2)
+	push	(_main_Period_ref_1_95 + 3)
+	push	_main_Vrms_test_1_95
+	push	(_main_Vrms_test_1_95 + 1)
+	push	(_main_Vrms_test_1_95 + 2)
+	push	(_main_Vrms_test_1_95 + 3)
+	push	_main_Vrms_ref_1_95
+	push	(_main_Vrms_ref_1_95 + 1)
+	push	(_main_Vrms_ref_1_95 + 2)
+	push	(_main_Vrms_ref_1_95 + 3)
 	mov	a,#__str_5
 	push	acc
 	mov	a,#(__str_5 >> 8)
@@ -2675,43 +2708,89 @@ L024005?:
 	mov	a,sp
 	add	a,#0xeb
 	mov	sp,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:597: printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
-	mov	dpl,_main_Period_test_1_94
-	mov	dph,(_main_Period_test_1_94 + 1)
-	mov	b,(_main_Period_test_1_94 + 2)
-	mov	a,(_main_Period_test_1_94 + 3)
-	lcall	_Get_test_peak
-	mov	r4,dpl
-	mov	r1,dph
-	mov	r5,b
-	mov	r6,a
-	mov	dpl,_main_Period_ref_1_94
-	mov	dph,(_main_Period_ref_1_94 + 1)
-	mov	b,(_main_Period_ref_1_94 + 2)
-	mov	a,(_main_Period_ref_1_94 + 3)
-	push	ar4
-	push	ar5
-	push	ar6
-	push	ar1
-	lcall	_Get_ref_peak
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:595: Vrms_ref_int=Vrms_ref*1000;
+	push	_main_Vrms_ref_1_95
+	push	(_main_Vrms_ref_1_95 + 1)
+	push	(_main_Vrms_ref_1_95 + 2)
+	push	(_main_Vrms_ref_1_95 + 3)
+	mov	dptr,#0x0000
+	mov	b,#0x7A
+	mov	a,#0x44
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r5
+	lcall	___fs2sint
+	mov	_main_Vrms_ref_int_1_95,dpl
+	mov	(_main_Vrms_ref_int_1_95 + 1),dph
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:596: Vrms_test_int=Vrms_test*1000;
+	push	_main_Vrms_test_1_95
+	push	(_main_Vrms_test_1_95 + 1)
+	push	(_main_Vrms_test_1_95 + 2)
+	push	(_main_Vrms_test_1_95 + 3)
+	mov	dptr,#0x0000
+	mov	b,#0x7A
+	mov	a,#0x44
+	lcall	___fsmul
 	mov	r7,dpl
 	mov	r0,dph
-	mov	r2,b
-	mov	r3,a
+	mov	r1,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r7
+	mov	dph,r0
+	mov	b,r1
+	mov	a,r5
+	lcall	___fs2sint
+	mov	_main_Vrms_test_int_1_95,dpl
+	mov	(_main_Vrms_test_int_1_95 + 1),dph
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:598: printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
+	mov	dpl,_main_Period_test_1_95
+	mov	dph,(_main_Period_test_1_95 + 1)
+	mov	b,(_main_Period_test_1_95 + 2)
+	mov	a,(_main_Period_test_1_95 + 3)
+	lcall	_Get_test_peak
+	mov	r7,dpl
+	mov	r0,dph
+	mov	r1,b
+	mov	r5,a
+	mov	dpl,_main_Period_ref_1_95
+	mov	dph,(_main_Period_ref_1_95 + 1)
+	mov	b,(_main_Period_ref_1_95 + 2)
+	mov	a,(_main_Period_ref_1_95 + 3)
+	push	ar5
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_Get_ref_peak
+	mov	r6,dpl
+	mov	r2,dph
+	mov	r3,b
+	mov	r4,a
 	pop	ar1
-	pop	ar6
+	pop	ar0
+	pop	ar7
 	pop	ar5
-	pop	ar4
-	push	_main_phase_diff_int_1_94
-	push	(_main_phase_diff_int_1_94 + 1)
-	push	ar4
+	push	_main_phase_diff_int_1_95
+	push	(_main_phase_diff_int_1_95 + 1)
+	push	ar7
+	push	ar0
 	push	ar1
 	push	ar5
 	push	ar6
-	push	ar7
-	push	ar0
 	push	ar2
 	push	ar3
+	push	ar4
 	mov	a,#__str_6
 	push	acc
 	mov	a,#(__str_6 >> 8)
@@ -2722,26 +2801,237 @@ L024005?:
 	mov	a,sp
 	add	a,#0xf3
 	mov	sp,a
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:600: while(phase_diff_int)
-	mov	r2,#0x00
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:601: neg_flag=0;
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:602: if (phase_diff_int<0){
+	clr	a
+	mov	r2,a
+	mov	r3,a
+	mov	a,(_main_phase_diff_int_1_95 + 1)
+	jnb	acc.7,L024026?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:603: neg_flag=1;
+	mov	r2,#0x01
 	mov	r3,#0x00
-L024001?:
-	mov	a,_main_phase_diff_int_1_94
-	orl	a,(_main_phase_diff_int_1_94 + 1)
-	jz	L024003?
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:602: phase_string[count] = 48+phase_diff_int%10;
-	mov	a,r2
-	add	a,_main_phase_string_1_94
-	mov	r4,a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:604: phase_diff_int=-phase_diff_int;
+	clr	c
+	clr	a
+	subb	a,_main_phase_diff_int_1_95
+	mov	_main_phase_diff_int_1_95,a
+	clr	a
+	subb	a,(_main_phase_diff_int_1_95 + 1)
+	mov	(_main_phase_diff_int_1_95 + 1),a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:609: while(phase_diff_int)
+L024026?:
+	clr	a
+	cjne	r2,#0x01,L024041?
+	cjne	r3,#0x00,L024041?
+	inc	a
+L024041?:
+	mov	r2,a
+	mov	r3,#0x00
+	mov	r4,#0x00
+L024006?:
+	mov	a,_main_phase_diff_int_1_95
+	orl	a,(_main_phase_diff_int_1_95 + 1)
+	jnz	L024043?
+	ljmp	L024008?
+L024043?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:611: phase_string[count] = 48+phase_diff_int%10;
 	mov	a,r3
-	addc	a,(_main_phase_string_1_94 + 1)
+	add	a,_main_phase_string_1_95
 	mov	r5,a
-	mov	r6,(_main_phase_string_1_94 + 2)
+	mov	a,r4
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r6,a
+	mov	r7,(_main_phase_string_1_95 + 2)
 	mov	__modsint_PARM_2,#0x0A
 	clr	a
 	mov	(__modsint_PARM_2 + 1),a
-	mov	dpl,_main_phase_diff_int_1_94
-	mov	dph,(_main_phase_diff_int_1_94 + 1)
+	mov	dpl,_main_phase_diff_int_1_95
+	mov	dph,(_main_phase_diff_int_1_95 + 1)
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	push	ar6
+	push	ar7
+	lcall	__modsint
+	mov	r0,dpl
+	pop	ar7
+	pop	ar6
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	mov	a,#0x30
+	add	a,r0
+	mov	dpl,r5
+	mov	dph,r6
+	mov	b,r7
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:612: phase_string[count+3]=' ';
+	mov	a,#0x03
+	add	a,r3
+	mov	r5,a
+	clr	a
+	addc	a,r4
+	mov	r6,a
+	mov	a,r5
+	add	a,_main_phase_string_1_95
+	mov	r5,a
+	mov	a,r6
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r6,a
+	mov	r7,(_main_phase_string_1_95 + 2)
+	mov	dpl,r5
+	mov	dph,r6
+	mov	b,r7
+	mov	a,#0x20
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:614: phase_diff_int /= 10;
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,_main_phase_diff_int_1_95
+	mov	dph,(_main_phase_diff_int_1_95 + 1)
+	push	ar3
+	push	ar4
+	lcall	__divsint
+	mov	_main_phase_diff_int_1_95,dpl
+	mov	(_main_phase_diff_int_1_95 + 1),dph
+	pop	ar4
+	pop	ar3
+	pop	ar2
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:615: count++;
+	inc	r3
+	cjne	r3,#0x00,L024044?
+	inc	r4
+L024044?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:617: if(neg_flag==1&&phase_diff_int==0){
+	mov	a,r2
+	jnz	L024045?
+	ljmp	L024006?
+L024045?:
+	mov	a,_main_phase_diff_int_1_95
+	orl	a,(_main_phase_diff_int_1_95 + 1)
+	jz	L024046?
+	ljmp	L024006?
+L024046?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:618: phase_string[count]='-';
+	mov	a,r3
+	add	a,_main_phase_string_1_95
+	mov	r5,a
+	mov	a,r4
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r6,a
+	mov	r7,(_main_phase_string_1_95 + 2)
+	mov	dpl,r5
+	mov	dph,r6
+	mov	b,r7
+	mov	a,#0x2D
+	lcall	__gptrput
+	ljmp	L024006?
+L024008?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:625: count+=2;
+	mov	a,#0x02
+	add	a,r3
+	mov	r3,a
+	clr	a
+	addc	a,r4
+	mov	r2,a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:627: while(Vrms_test_int)
+	mov	ar4,r3
+	mov	ar5,r2
+L024009?:
+	mov	a,_main_Vrms_test_int_1_95
+	orl	a,(_main_Vrms_test_int_1_95 + 1)
+	jz	L024011?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:629: phase_string[count]= 48+Vrms_test_int%10;
+	mov	a,r4
+	add	a,_main_phase_string_1_95
+	mov	_main_sloc0_1_0,a
+	mov	a,r5
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	(_main_sloc0_1_0 + 1),a
+	mov	(_main_sloc0_1_0 + 2),(_main_phase_string_1_95 + 2)
+	mov	__modsint_PARM_2,#0x0A
+	clr	a
+	mov	(__modsint_PARM_2 + 1),a
+	mov	dpl,_main_Vrms_test_int_1_95
+	mov	dph,(_main_Vrms_test_int_1_95 + 1)
+	push	ar4
+	push	ar5
+	lcall	__modsint
+	mov	r1,dpl
+	pop	ar5
+	pop	ar4
+	mov	a,#0x30
+	add	a,r1
+	mov	dpl,_main_sloc0_1_0
+	mov	dph,(_main_sloc0_1_0 + 1)
+	mov	b,(_main_sloc0_1_0 + 2)
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:630: phase_string[count+3]=' ';
+	mov	a,#0x03
+	add	a,r4
+	mov	r6,a
+	clr	a
+	addc	a,r5
+	mov	r7,a
+	mov	a,r6
+	add	a,_main_phase_string_1_95
+	mov	r6,a
+	mov	a,r7
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r7,a
+	mov	r0,(_main_phase_string_1_95 + 2)
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,#0x20
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:631: Vrms_test_int/=10;
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,_main_Vrms_test_int_1_95
+	mov	dph,(_main_Vrms_test_int_1_95 + 1)
+	push	ar4
+	push	ar5
+	lcall	__divsint
+	mov	_main_Vrms_test_int_1_95,dpl
+	mov	(_main_Vrms_test_int_1_95 + 1),dph
+	pop	ar5
+	pop	ar4
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:633: count++;
+	inc	r4
+	cjne	r4,#0x00,L024009?
+	inc	r5
+	sjmp	L024009?
+L024011?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:636: count+=1;
+	mov	a,#0x01
+	add	a,r4
+	mov	r3,a
+	clr	a
+	addc	a,r5
+	mov	r2,a
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:638: while(Vrms_ref_int){
+L024012?:
+	mov	a,_main_Vrms_ref_int_1_95
+	orl	a,(_main_Vrms_ref_int_1_95 + 1)
+	jz	L024014?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:639: phase_string[count]=48+Vrms_ref_int%10;
+	mov	a,r3
+	add	a,_main_phase_string_1_95
+	mov	r4,a
+	mov	a,r2
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r5,a
+	mov	r6,(_main_phase_string_1_95 + 2)
+	mov	__modsint_PARM_2,#0x0A
+	clr	a
+	mov	(__modsint_PARM_2 + 1),a
+	mov	dpl,_main_Vrms_ref_int_1_95
+	mov	dph,(_main_Vrms_ref_int_1_95 + 1)
 	push	ar2
 	push	ar3
 	push	ar4
@@ -2752,40 +3042,130 @@ L024001?:
 	pop	ar6
 	pop	ar5
 	pop	ar4
+	pop	ar3
+	pop	ar2
 	mov	a,#0x30
 	add	a,r7
 	mov	dpl,r4
 	mov	dph,r5
 	mov	b,r6
 	lcall	__gptrput
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:603: phase_diff_int /= 10;
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:640: phase_string[count+3]=' ';
+	mov	a,#0x03
+	add	a,r3
+	mov	r4,a
+	clr	a
+	addc	a,r2
+	mov	r5,a
+	mov	a,r4
+	add	a,_main_phase_string_1_95
+	mov	r4,a
+	mov	a,r5
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r5,a
+	mov	r6,(_main_phase_string_1_95 + 2)
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,#0x20
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:641: Vrms_ref_int/=10;
 	mov	__divsint_PARM_2,#0x0A
 	clr	a
 	mov	(__divsint_PARM_2 + 1),a
-	mov	dpl,_main_phase_diff_int_1_94
-	mov	dph,(_main_phase_diff_int_1_94 + 1)
+	mov	dpl,_main_Vrms_ref_int_1_95
+	mov	dph,(_main_Vrms_ref_int_1_95 + 1)
+	push	ar2
+	push	ar3
 	lcall	__divsint
-	mov	_main_phase_diff_int_1_94,dpl
-	mov	(_main_phase_diff_int_1_94 + 1),dph
+	mov	_main_Vrms_ref_int_1_95,dpl
+	mov	(_main_Vrms_ref_int_1_95 + 1),dph
 	pop	ar3
 	pop	ar2
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:604: count++;
-	inc	r2
-	cjne	r2,#0x00,L024001?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:642: count++;
 	inc	r3
-	sjmp	L024001?
-L024003?:
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:610: LCDprint_inv(phase_string, 1, 1);
-	mov	_LCDprint_inv_PARM_2,#0x01
+	cjne	r3,#0x00,L024050?
+	inc	r2
+L024050?:
+	ljmp	L024012?
+L024014?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:645: phase_string[count]='\0';	
+	mov	a,r3
+	add	a,_main_phase_string_1_95
+	mov	r3,a
+	mov	a,r2
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r2,a
+	mov	r4,(_main_phase_string_1_95 + 2)
+	mov	dpl,r3
+	mov	dph,r2
+	mov	b,r4
+	clr	a
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:650: LCDprint("Vr   Vt   Phase ", 1,1);
+	mov	_LCDprint_PARM_2,#0x01
+	setb	_LCDprint_PARM_3
+	mov	dptr,#__str_7
+	mov	b,#0x80
+	lcall	_LCDprint
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:651: LCDprint_inv(phase_string, 2, 1);
+	mov	_LCDprint_inv_PARM_2,#0x02
 	setb	_LCDprint_inv_PARM_3
-	mov	dpl,_main_phase_string_1_94
-	mov	dph,(_main_phase_string_1_94 + 1)
-	mov	b,(_main_phase_string_1_94 + 2)
+	mov	dpl,_main_phase_string_1_95
+	mov	dph,(_main_phase_string_1_95 + 1)
+	mov	b,(_main_phase_string_1_95 + 2)
 	lcall	_LCDprint_inv
-;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:611: waitms(500);
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:652: waitms(500);
 	mov	dptr,#0x01F4
 	lcall	_waitms
-	ljmp	L024005?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:655: for(count=0;count<15;count++){
+	mov	r2,#0x00
+	mov	r3,#0x00
+L024018?:
+	clr	c
+	mov	a,r2
+	subb	a,#0x0F
+	mov	a,r3
+	xrl	a,#0x80
+	subb	a,#0x80
+	jnc	L024021?
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:656: phase_string[count]=' ';
+	mov	a,r2
+	add	a,_main_phase_string_1_95
+	mov	r4,a
+	mov	a,r3
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r5,a
+	mov	r6,(_main_phase_string_1_95 + 2)
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,#0x20
+	lcall	__gptrput
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:655: for(count=0;count<15;count++){
+	inc	r2
+	cjne	r2,#0x00,L024018?
+	inc	r3
+	sjmp	L024018?
+L024021?:
+;	C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:658: phase_string[count+1]='\0';
+	inc	r2
+	cjne	r2,#0x00,L024052?
+	inc	r3
+L024052?:
+	mov	a,r2
+	add	a,_main_phase_string_1_95
+	mov	r2,a
+	mov	a,r3
+	addc	a,(_main_phase_string_1_95 + 1)
+	mov	r3,a
+	mov	r4,(_main_phase_string_1_95 + 2)
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	clr	a
+	lcall	__gptrput
+	ljmp	L024016?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -2828,7 +3208,7 @@ __str_3:
 	db 'Mar  8 2018'
 	db 0x00
 __str_4:
-	db '12:31:45'
+	db '13:55:51'
 	db 0x00
 __str_5:
 	db 'V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%l'
@@ -2845,6 +3225,9 @@ __str_6:
 	db ' %i'
 	db 0x0D
 	db 0x0A
+	db 0x00
+__str_7:
+	db 'Vr   Vt   Phase '
 	db 0x00
 
 	CSEG

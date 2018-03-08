@@ -467,14 +467,12 @@ int Get_Phase_diff (float period)
 		    		    		
 		    //our current circuit with cap .01 uF maps to a linera phase output between -113 and 73 deg. The cap value was found to effect this phase difference. 
 			// This section intended to rectify this difference to 0 to 180
-		    /*	if(flag==-1){
-		    	//phase_diff=phase_diff;
+		    	if(flag==1){
+		    	phase_diff=-phase_diff;
 
 		    	}
-		    	else{
-		    	 phase_diff=phase_diff;
-		    	}*/
-
+		    
+			//	printf("%i\n", phase_diff);
 		    	return phase_diff; 
 
 }
@@ -537,8 +535,9 @@ void main (void)
 	float Period_test=0;
 	int phase_diff_int=0;
 	char* phase_string=NULL;
-	//float p_ref[sample_size+1];
-	//float p_test[sample_size+1];
+	int neg_flag=0;
+	int Vrms_test_int=0;
+	int Vrms_ref_int=0;
 	
 
 	//long int overflow_count;
@@ -584,7 +583,8 @@ void main (void)
 		 Vrms_test= Get_test_peak(Period_test)/1.41421356;
 		 
 
-		 phase_diff_int= Get_Phase_diff (16.666666);//(Period_ref)+Period_test)/2);
+		 phase_diff_int= Get_Phase_diff (16.6666666666);//(Period_ref)+Period_test)/2);
+		 
 		
 		
 			// Read 14-bit value from the pins configured as analog inputs
@@ -592,23 +592,70 @@ void main (void)
 			//v[1] = Volts_at_Pin(QFP32_MUX_P1_6); //test
 			printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 			printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);	
-			
+			Vrms_ref_int=Vrms_ref*1000;
+			Vrms_test_int=Vrms_test*1000;
 			
 				printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
 			
 			 count=0;
+			 neg_flag=0;
+			 if (phase_diff_int<0){
+			 	neg_flag=1;
+		 		phase_diff_int=-phase_diff_int;
+		 	
+		 	}
+		 	//if (phase_diff_int==0) neg_flag=-1;
+			 
 		 while(phase_diff_int)
 				{
 					phase_string[count] = 48+phase_diff_int%10;
+					phase_string[count+3]=' ';
+					
 					phase_diff_int /= 10;
 					count++;
+					
+					if(neg_flag==1&&phase_diff_int==0){
+						phase_string[count]='-';
+						
+					
+					}
+					//else phase_string[count]='\0';
 				}
+				
+			count+=2;
 			
-			//LCDprint(phase_string, 2, 1);
-		//	LCDprint("Signal 2", 2, 1);
-
-			LCDprint_inv(phase_string, 1, 1);
+		while(Vrms_test_int)
+			{
+				phase_string[count]= 48+Vrms_test_int%10;
+				phase_string[count+3]=' ';
+				Vrms_test_int/=10;
+			
+				count++;
+				}
+		
+			count+=1;
+		
+		while(Vrms_ref_int){
+				phase_string[count]=48+Vrms_ref_int%10;
+				phase_string[count+3]=' ';
+				Vrms_ref_int/=10;
+				count++;
+				
+				}
+			phase_string[count]='\0';	
+				
+		
+		
+					//01234567890123456
+			LCDprint("Vr   Vt   Phase ", 1,1);
+			LCDprint_inv(phase_string, 2, 1);
 			waitms(500);
+			
+			//clear array every time;
+			for(count=0;count<15;count++){
+			phase_string[count]=' ';
+			}
+			phase_string[count+1]='\0';
 		
 		//
 		
