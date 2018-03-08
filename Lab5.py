@@ -7,7 +7,10 @@ import serial.tools.list_ports
 #==============================================================================
 # SPI SETUP
 #==============================================================================
-PORT = 'COM5'
+PORT = 'COM10'
+Graph_Flag=2;
+paramters_array=[]
+count=0;
 try:
     ser.close();
 except:
@@ -20,15 +23,41 @@ except:
     ser = serial.Serial(portlist[0][0], 115200, timeout=100)
     ser.isOpen()
     
+handshake=ser.readline()
+handshake.decode('ascii')
+while Graph_Flag==2:
+    handshake= (ser.readline())
+    #handshake.decode('ascii')
+    print(handshake.decode('ascii'));
+    #print(type(handshake.decode('ascii')));
+    fat= float(handshake)
+    if fat==1000:
+        Graph_Flag=0
+
+while (Graph_Flag==0): #Gets parameters for the 2nd graph
+    
+    paramters_array.append(ser.readline()) ;             
+    print(paramters_array[count].decode('ascii')); #Testing to see if right paramters are beng sent    
+    print('nice')
+    fat= float(paramters_array[count])
+    print  (paramters_array)
+    if fat==1001:
+        Graph_Flag=1
+        
+    count+=1
+print  (paramters_array)
 #==============================================================================
 # Graph Setup    
 #==============================================================================
 
-xsize=360
+xsize=400
 
-mag1=4
-mag2=5
-Phase=-40
+mag1=float(paramters_array[0])
+print(mag1)
+mag2=float(paramters_array[1])
+print(mag2)
+Phase=int(paramters_array[2])
+print(Phase)
 rms1=mag1/math.sqrt(2)
 rms2=mag2/math.sqrt(2)
    

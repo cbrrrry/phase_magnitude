@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1069 (Apr 23 2015) (MSVC)
-0000              4   ; This file was generated Thu Mar 08 13:55:51 2018
+0000              4   ; This file was generated Thu Mar 08 14:42:59 2018
 0000              5   ;--------------------------------------------------------
                   5   $name mag_phase_EFM8
                   6   $optc51 --model-small
@@ -2588,7 +2588,7 @@
 0B53           2588   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:562: InitADC();
 0B53 120100    2589            lcall   _InitADC
 0B56           2590   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:566: while (1)
-0B56           2591   L024016?:
+0B56           2591   L024018?:
 0B56           2592   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:575: Period_ref = Get_Period_ref(); //get_max(p_ref, sample_size);
 0B56 120100    2593            lcall   _Get_Period_ref
 0B59 858250    2594            mov     _main_Period_ref_1_95,dpl
@@ -2607,7 +2607,7 @@
 0B78 8552F0    2607            mov     b,(_main_Period_ref_1_95 + 2)
 0B7B E553      2608            mov     a,(_main_Period_ref_1_95 + 3)
 0B7D 120100    2609            lcall   _Get_ref_peak
-0B80 A882      2610            mov     r0,dpl
+0B80 A982      2610            mov     r1,dpl
 0B82 AD83      2611            mov     r5,dph
 0B84 AEF0      2612            mov     r6,b
 0B86 FF        2613            mov     r7,a
@@ -2619,7 +2619,7 @@
 0B91 C0E0      2619            push    acc
 0B93 743F      2620            mov     a,#0x3F
 0B95 C0E0      2621            push    acc
-0B97 8882      2622            mov     dpl,r0
+0B97 8982      2622            mov     dpl,r1
 0B99 8D83      2623            mov     dph,r5
 0B9B 8EF0      2624            mov     b,r6
 0B9D EF        2625            mov     a,r7
@@ -2661,619 +2661,628 @@
 0BEC E581      2661            mov     a,sp
 0BEE 24FC      2662            add     a,#0xfc
 0BF0 F581      2663            mov     sp,a
-0BF2           2664   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:586: phase_diff_int= Get_Phase_diff (16.6666666666);//(Period_ref)+Period_test)/2);
-0BF2 905555    2665            mov     dptr,#0x5555
-0BF5 75F085    2666            mov     b,#0x85
-0BF8 7441      2667            mov     a,#0x41
-0BFA 120100    2668            lcall   _Get_Phase_diff
-0BFD 8582F0    2669            mov     _main_phase_diff_int_1_95,dpl
-0C00 8583F1    2670            mov     (_main_phase_diff_int_1_95 + 1),dph
-0C03           2671   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:593: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-0C03 7428      2672            mov     a,#__str_0
-0C05 C0E0      2673            push    acc
-0C07 74D6      2674            mov     a,#(__str_0 >> 8)
-0C09 C0E0      2675            push    acc
-0C0B 7480      2676            mov     a,#0x80
-0C0D C0E0      2677            push    acc
-0C0F 120100    2678            lcall   _printf
-0C12 1581      2679            dec     sp
-0C14 1581      2680            dec     sp
-0C16 1581      2681            dec     sp
-0C18           2682   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:594: printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);         
-0C18 C0F0      2683            push    _main_phase_diff_int_1_95
-0C1A C0F1      2684            push    (_main_phase_diff_int_1_95 + 1)
-0C1C C0A0      2685            push    _main_Period_test_1_95
-0C1E C0A1      2686            push    (_main_Period_test_1_95 + 1)
-0C20 C0A2      2687            push    (_main_Period_test_1_95 + 2)
-0C22 C0A3      2688            push    (_main_Period_test_1_95 + 3)
-0C24 C050      2689            push    _main_Period_ref_1_95
-0C26 C051      2690            push    (_main_Period_ref_1_95 + 1)
-0C28 C052      2691            push    (_main_Period_ref_1_95 + 2)
-0C2A C053      2692            push    (_main_Period_ref_1_95 + 3)
-0C2C C000      2693            push    _main_Vrms_test_1_95
-0C2E C001      2694            push    (_main_Vrms_test_1_95 + 1)
-0C30 C002      2695            push    (_main_Vrms_test_1_95 + 2)
-0C32 C003      2696            push    (_main_Vrms_test_1_95 + 3)
-0C34 C0B0      2697            push    _main_Vrms_ref_1_95
-0C36 C0B1      2698            push    (_main_Vrms_ref_1_95 + 1)
-0C38 C0B2      2699            push    (_main_Vrms_ref_1_95 + 2)
-0C3A C0B3      2700            push    (_main_Vrms_ref_1_95 + 3)
-0C3C 74E8      2701            mov     a,#__str_5
-0C3E C0E0      2702            push    acc
-0C40 74D7      2703            mov     a,#(__str_5 >> 8)
-0C42 C0E0      2704            push    acc
-0C44 7480      2705            mov     a,#0x80
-0C46 C0E0      2706            push    acc
-0C48 120100    2707            lcall   _printf
-0C4B E581      2708            mov     a,sp
-0C4D 24EB      2709            add     a,#0xeb
-0C4F F581      2710            mov     sp,a
-0C51           2711   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:595: Vrms_ref_int=Vrms_ref*1000;
-0C51 C0B0      2712            push    _main_Vrms_ref_1_95
-0C53 C0B1      2713            push    (_main_Vrms_ref_1_95 + 1)
-0C55 C0B2      2714            push    (_main_Vrms_ref_1_95 + 2)
-0C57 C0B3      2715            push    (_main_Vrms_ref_1_95 + 3)
-0C59 900000    2716            mov     dptr,#0x0000
-0C5C 75F07A    2717            mov     b,#0x7A
-0C5F 7444      2718            mov     a,#0x44
-0C61 120100    2719            lcall   ___fsmul
-0C64 AE82      2720            mov     r6,dpl
-0C66 AF83      2721            mov     r7,dph
-0C68 A8F0      2722            mov     r0,b
-0C6A FD        2723            mov     r5,a
-0C6B E581      2724            mov     a,sp
-0C6D 24FC      2725            add     a,#0xfc
-0C6F F581      2726            mov     sp,a
-0C71 8E82      2727            mov     dpl,r6
-0C73 8F83      2728            mov     dph,r7
-0C75 88F0      2729            mov     b,r0
-0C77 ED        2730            mov     a,r5
-0C78 120100    2731            lcall   ___fs2sint
-0C7B 8582E0    2732            mov     _main_Vrms_ref_int_1_95,dpl
-0C7E 8583E1    2733            mov     (_main_Vrms_ref_int_1_95 + 1),dph
-0C81           2734   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:596: Vrms_test_int=Vrms_test*1000;
-0C81 C000      2735            push    _main_Vrms_test_1_95
-0C83 C001      2736            push    (_main_Vrms_test_1_95 + 1)
-0C85 C002      2737            push    (_main_Vrms_test_1_95 + 2)
-0C87 C003      2738            push    (_main_Vrms_test_1_95 + 3)
-0C89 900000    2739            mov     dptr,#0x0000
-0C8C 75F07A    2740            mov     b,#0x7A
-0C8F 7444      2741            mov     a,#0x44
-0C91 120100    2742            lcall   ___fsmul
-0C94 AF82      2743            mov     r7,dpl
-0C96 A883      2744            mov     r0,dph
-0C98 A9F0      2745            mov     r1,b
-0C9A FD        2746            mov     r5,a
-0C9B E581      2747            mov     a,sp
-0C9D 24FC      2748            add     a,#0xfc
-0C9F F581      2749            mov     sp,a
-0CA1 8F82      2750            mov     dpl,r7
-0CA3 8883      2751            mov     dph,r0
-0CA5 89F0      2752            mov     b,r1
-0CA7 ED        2753            mov     a,r5
-0CA8 120100    2754            lcall   ___fs2sint
-0CAB 858290    2755            mov     _main_Vrms_test_int_1_95,dpl
-0CAE 858391    2756            mov     (_main_Vrms_test_int_1_95 + 1),dph
-0CB1           2757   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:598: printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
-0CB1 85A082    2758            mov     dpl,_main_Period_test_1_95
-0CB4 85A183    2759            mov     dph,(_main_Period_test_1_95 + 1)
-0CB7 85A2F0    2760            mov     b,(_main_Period_test_1_95 + 2)
-0CBA E5A3      2761            mov     a,(_main_Period_test_1_95 + 3)
-0CBC 120100    2762            lcall   _Get_test_peak
-0CBF AF82      2763            mov     r7,dpl
-0CC1 A883      2764            mov     r0,dph
-0CC3 A9F0      2765            mov     r1,b
-0CC5 FD        2766            mov     r5,a
-0CC6 855082    2767            mov     dpl,_main_Period_ref_1_95
-0CC9 855183    2768            mov     dph,(_main_Period_ref_1_95 + 1)
-0CCC 8552F0    2769            mov     b,(_main_Period_ref_1_95 + 2)
-0CCF E553      2770            mov     a,(_main_Period_ref_1_95 + 3)
-0CD1 C005      2771            push    ar5
-0CD3 C007      2772            push    ar7
-0CD5 C000      2773            push    ar0
-0CD7 C001      2774            push    ar1
-0CD9 120100    2775            lcall   _Get_ref_peak
-0CDC AE82      2776            mov     r6,dpl
-0CDE AA83      2777            mov     r2,dph
-0CE0 ABF0      2778            mov     r3,b
-0CE2 FC        2779            mov     r4,a
-0CE3 D001      2780            pop     ar1
-0CE5 D000      2781            pop     ar0
-0CE7 D007      2782            pop     ar7
-0CE9 D005      2783            pop     ar5
-0CEB C0F0      2784            push    _main_phase_diff_int_1_95
-0CED C0F1      2785            push    (_main_phase_diff_int_1_95 + 1)
-0CEF C007      2786            push    ar7
-0CF1 C000      2787            push    ar0
-0CF3 C001      2788            push    ar1
-0CF5 C005      2789            push    ar5
-0CF7 C006      2790            push    ar6
-0CF9 C002      2791            push    ar2
-0CFB C003      2792            push    ar3
-0CFD C004      2793            push    ar4
-0CFF 7428      2794            mov     a,#__str_6
-0D01 C0E0      2795            push    acc
-0D03 74D8      2796            mov     a,#(__str_6 >> 8)
-0D05 C0E0      2797            push    acc
-0D07 7480      2798            mov     a,#0x80
-0D09 C0E0      2799            push    acc
-0D0B 120100    2800            lcall   _printf
-0D0E E581      2801            mov     a,sp
-0D10 24F3      2802            add     a,#0xf3
-0D12 F581      2803            mov     sp,a
-0D14           2804   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:601: neg_flag=0;
-0D14           2805   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:602: if (phase_diff_int<0){
-0D14 E4        2806            clr     a
-0D15 FA        2807            mov     r2,a
-0D16 FB        2808            mov     r3,a
-0D17 E5F1      2809            mov     a,(_main_phase_diff_int_1_95 + 1)
-0D19 30E768    2810            jnb     acc.7,L024026?
-0D1C           2811   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:603: neg_flag=1;
-0D1C 7A01      2812            mov     r2,#0x01
-0D1E 7B00      2813            mov     r3,#0x00
-0D20           2814   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:604: phase_diff_int=-phase_diff_int;
-0D20 C3        2815            clr     c
-0D21 E4        2816            clr     a
-0D22 95F0      2817            subb    a,_main_phase_diff_int_1_95
-0D24 F5F0      2818            mov     _main_phase_diff_int_1_95,a
-0D26 E4        2819            clr     a
-0D27 95F1      2820            subb    a,(_main_phase_diff_int_1_95 + 1)
-0D29 F5F1      2821            mov     (_main_phase_diff_int_1_95 + 1),a
-0D2B           2822   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:609: while(phase_diff_int)
-0D2B           2823   L024026?:
-0D2B E4        2824            clr     a
-0D2C BA01A8    2825            cjne    r2,#0x01,L024041?
-0D2F BB00A8    2826            cjne    r3,#0x00,L024041?
-0D32 04        2827            inc     a
-0D33           2828   L024041?:
-0D33 FA        2829            mov     r2,a
-0D34 7B00      2830            mov     r3,#0x00
-0D36 7C00      2831            mov     r4,#0x00
-0D38           2832   L024006?:
-0D38 E5F0      2833            mov     a,_main_phase_diff_int_1_95
-0D3A 45F1      2834            orl     a,(_main_phase_diff_int_1_95 + 1)
-0D3C 7001      2835            jnz     L024043?
-0D3E 020100    2836            ljmp    L024008?
-0D41           2837   L024043?:
-0D41           2838   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:611: phase_string[count] = 48+phase_diff_int%10;
-0D41 EB        2839            mov     a,r3
-0D42 2540      2840            add     a,_main_phase_string_1_95
-0D44 FD        2841            mov     r5,a
-0D45 EC        2842            mov     a,r4
-0D46 3541      2843            addc    a,(_main_phase_string_1_95 + 1)
-0D48 FE        2844            mov     r6,a
-0D49 AF42      2845            mov     r7,(_main_phase_string_1_95 + 2)
-0D4B 75000A    2846            mov     __modsint_PARM_2,#0x0A
-0D4E E4        2847            clr     a
-0D4F F501      2848            mov     (__modsint_PARM_2 + 1),a
-0D51 85F082    2849            mov     dpl,_main_phase_diff_int_1_95
-0D54 85F183    2850            mov     dph,(_main_phase_diff_int_1_95 + 1)
-0D57 C002      2851            push    ar2
-0D59 C003      2852            push    ar3
-0D5B C004      2853            push    ar4
-0D5D C005      2854            push    ar5
-0D5F C006      2855            push    ar6
-0D61 C007      2856            push    ar7
-0D63 120100    2857            lcall   __modsint
-0D66 A882      2858            mov     r0,dpl
-0D68 D007      2859            pop     ar7
-0D6A D006      2860            pop     ar6
-0D6C D005      2861            pop     ar5
-0D6E D004      2862            pop     ar4
-0D70 D003      2863            pop     ar3
-0D72 7430      2864            mov     a,#0x30
-0D74 28        2865            add     a,r0
-0D75 8D82      2866            mov     dpl,r5
-0D77 8E83      2867            mov     dph,r6
-0D79 8FF0      2868            mov     b,r7
-0D7B 120100    2869            lcall   __gptrput
-0D7E           2870   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:612: phase_string[count+3]=' ';
-0D7E 7403      2871            mov     a,#0x03
-0D80 2B        2872            add     a,r3
-0D81 FD        2873            mov     r5,a
-0D82 E4        2874            clr     a
-0D83 3C        2875            addc    a,r4
-0D84 FE        2876            mov     r6,a
-0D85 ED        2877            mov     a,r5
-0D86 2540      2878            add     a,_main_phase_string_1_95
-0D88 FD        2879            mov     r5,a
-0D89 EE        2880            mov     a,r6
-0D8A 3541      2881            addc    a,(_main_phase_string_1_95 + 1)
-0D8C FE        2882            mov     r6,a
-0D8D AF42      2883            mov     r7,(_main_phase_string_1_95 + 2)
-0D8F 8D82      2884            mov     dpl,r5
-0D91 8E83      2885            mov     dph,r6
-0D93 8FF0      2886            mov     b,r7
-0D95 7420      2887            mov     a,#0x20
-0D97 120100    2888            lcall   __gptrput
-0D9A           2889   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:614: phase_diff_int /= 10;
-0D9A 75000A    2890            mov     __divsint_PARM_2,#0x0A
-0D9D E4        2891            clr     a
-0D9E F501      2892            mov     (__divsint_PARM_2 + 1),a
-0DA0 85F082    2893            mov     dpl,_main_phase_diff_int_1_95
-0DA3 85F183    2894            mov     dph,(_main_phase_diff_int_1_95 + 1)
-0DA6 C003      2895            push    ar3
-0DA8 C004      2896            push    ar4
-0DAA 120100    2897            lcall   __divsint
-0DAD 8582F0    2898            mov     _main_phase_diff_int_1_95,dpl
-0DB0 8583F1    2899            mov     (_main_phase_diff_int_1_95 + 1),dph
-0DB3 D004      2900            pop     ar4
-0DB5 D003      2901            pop     ar3
-0DB7 D002      2902            pop     ar2
-0DB9           2903   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:615: count++;
-0DB9 0B        2904            inc     r3
-0DBA BB00C8    2905            cjne    r3,#0x00,L024044?
-0DBD 0C        2906            inc     r4
-0DBE           2907   L024044?:
-0DBE           2908   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:617: if(neg_flag==1&&phase_diff_int==0){
-0DBE EA        2909            mov     a,r2
-0DBF 7001      2910            jnz     L024045?
-0DC1 020100    2911            ljmp    L024006?
-0DC4           2912   L024045?:
-0DC4 E5F0      2913            mov     a,_main_phase_diff_int_1_95
-0DC6 45F1      2914            orl     a,(_main_phase_diff_int_1_95 + 1)
-0DC8 6001      2915            jz      L024046?
-0DCA 020100    2916            ljmp    L024006?
-0DCD           2917   L024046?:
-0DCD           2918   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:618: phase_string[count]='-';
-0DCD EB        2919            mov     a,r3
-0DCE 2540      2920            add     a,_main_phase_string_1_95
-0DD0 FD        2921            mov     r5,a
-0DD1 EC        2922            mov     a,r4
-0DD2 3541      2923            addc    a,(_main_phase_string_1_95 + 1)
-0DD4 FE        2924            mov     r6,a
-0DD5 AF42      2925            mov     r7,(_main_phase_string_1_95 + 2)
-0DD7 8D82      2926            mov     dpl,r5
-0DD9 8E83      2927            mov     dph,r6
-0DDB 8FF0      2928            mov     b,r7
-0DDD 742D      2929            mov     a,#0x2D
-0DDF 120100    2930            lcall   __gptrput
-0DE2 020100    2931            ljmp    L024006?
-0DE5           2932   L024008?:
-0DE5           2933   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:625: count+=2;
-0DE5 7402      2934            mov     a,#0x02
-0DE7 2B        2935            add     a,r3
-0DE8 FB        2936            mov     r3,a
-0DE9 E4        2937            clr     a
-0DEA 3C        2938            addc    a,r4
-0DEB FA        2939            mov     r2,a
-0DEC           2940   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:627: while(Vrms_test_int)
-0DEC 8B04      2941            mov     ar4,r3
-0DEE 8A05      2942            mov     ar5,r2
-0DF0           2943   L024009?:
-0DF0 E590      2944            mov     a,_main_Vrms_test_int_1_95
-0DF2 4591      2945            orl     a,(_main_Vrms_test_int_1_95 + 1)
-0DF4 6001      2946            jz      L024011?
-0DF6           2947   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:629: phase_string[count]= 48+Vrms_test_int%10;
-0DF6 EC        2948            mov     a,r4
-0DF7 2540      2949            add     a,_main_phase_string_1_95
-0DF9 F520      2950            mov     _main_sloc0_1_0,a
-0DFB ED        2951            mov     a,r5
-0DFC 3541      2952            addc    a,(_main_phase_string_1_95 + 1)
-0DFE F521      2953            mov     (_main_sloc0_1_0 + 1),a
-0E00 854222    2954            mov     (_main_sloc0_1_0 + 2),(_main_phase_string_1_95 + 2)
-0E03 75000A    2955            mov     __modsint_PARM_2,#0x0A
-0E06 E4        2956            clr     a
-0E07 F501      2957            mov     (__modsint_PARM_2 + 1),a
-0E09 859082    2958            mov     dpl,_main_Vrms_test_int_1_95
-0E0C 859183    2959            mov     dph,(_main_Vrms_test_int_1_95 + 1)
-0E0F C004      2960            push    ar4
-0E11 C005      2961            push    ar5
-0E13 120100    2962            lcall   __modsint
-0E16 A982      2963            mov     r1,dpl
-0E18 D005      2964            pop     ar5
-0E1A D004      2965            pop     ar4
-0E1C 7430      2966            mov     a,#0x30
-0E1E 29        2967            add     a,r1
-0E1F 852082    2968            mov     dpl,_main_sloc0_1_0
-0E22 852183    2969            mov     dph,(_main_sloc0_1_0 + 1)
-0E25 8522F0    2970            mov     b,(_main_sloc0_1_0 + 2)
-0E28 120100    2971            lcall   __gptrput
-0E2B           2972   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:630: phase_string[count+3]=' ';
-0E2B 7403      2973            mov     a,#0x03
-0E2D 2C        2974            add     a,r4
-0E2E FE        2975            mov     r6,a
-0E2F E4        2976            clr     a
-0E30 3D        2977            addc    a,r5
-0E31 FF        2978            mov     r7,a
-0E32 EE        2979            mov     a,r6
-0E33 2540      2980            add     a,_main_phase_string_1_95
-0E35 FE        2981            mov     r6,a
-0E36 EF        2982            mov     a,r7
-0E37 3541      2983            addc    a,(_main_phase_string_1_95 + 1)
-0E39 FF        2984            mov     r7,a
-0E3A A842      2985            mov     r0,(_main_phase_string_1_95 + 2)
-0E3C 8E82      2986            mov     dpl,r6
-0E3E 8F83      2987            mov     dph,r7
-0E40 88F0      2988            mov     b,r0
-0E42 7420      2989            mov     a,#0x20
-0E44 120100    2990            lcall   __gptrput
-0E47           2991   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:631: Vrms_test_int/=10;
-0E47 75000A    2992            mov     __divsint_PARM_2,#0x0A
-0E4A E4        2993            clr     a
-0E4B F501      2994            mov     (__divsint_PARM_2 + 1),a
-0E4D 859082    2995            mov     dpl,_main_Vrms_test_int_1_95
-0E50 859183    2996            mov     dph,(_main_Vrms_test_int_1_95 + 1)
-0E53 C004      2997            push    ar4
-0E55 C005      2998            push    ar5
-0E57 120100    2999            lcall   __divsint
-0E5A 858290    3000            mov     _main_Vrms_test_int_1_95,dpl
-0E5D 858391    3001            mov     (_main_Vrms_test_int_1_95 + 1),dph
-0E60 D005      3002            pop     ar5
-0E62 D004      3003            pop     ar4
-0E64           3004   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:633: count++;
-0E64 0C        3005            inc     r4
-0E65 BC0088    3006            cjne    r4,#0x00,L024009?
-0E68 0D        3007            inc     r5
-0E69 8001      3008            sjmp    L024009?
-0E6B           3009   L024011?:
-0E6B           3010   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:636: count+=1;
-0E6B 7401      3011            mov     a,#0x01
-0E6D 2C        3012            add     a,r4
-0E6E FB        3013            mov     r3,a
-0E6F E4        3014            clr     a
-0E70 3D        3015            addc    a,r5
-0E71 FA        3016            mov     r2,a
-0E72           3017   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:638: while(Vrms_ref_int){
-0E72           3018   L024012?:
-0E72 E5E0      3019            mov     a,_main_Vrms_ref_int_1_95
-0E74 45E1      3020            orl     a,(_main_Vrms_ref_int_1_95 + 1)
-0E76 6001      3021            jz      L024014?
-0E78           3022   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:639: phase_string[count]=48+Vrms_ref_int%10;
-0E78 EB        3023            mov     a,r3
-0E79 2540      3024            add     a,_main_phase_string_1_95
-0E7B FC        3025            mov     r4,a
-0E7C EA        3026            mov     a,r2
-0E7D 3541      3027            addc    a,(_main_phase_string_1_95 + 1)
-0E7F FD        3028            mov     r5,a
-0E80 AE42      3029            mov     r6,(_main_phase_string_1_95 + 2)
-0E82 75000A    3030            mov     __modsint_PARM_2,#0x0A
-0E85 E4        3031            clr     a
-0E86 F501      3032            mov     (__modsint_PARM_2 + 1),a
-0E88 85E082    3033            mov     dpl,_main_Vrms_ref_int_1_95
-0E8B 85E183    3034            mov     dph,(_main_Vrms_ref_int_1_95 + 1)
-0E8E C002      3035            push    ar2
-0E90 C003      3036            push    ar3
-0E92 C004      3037            push    ar4
-0E94 C005      3038            push    ar5
-0E96 C006      3039            push    ar6
-0E98 120100    3040            lcall   __modsint
-0E9B AF82      3041            mov     r7,dpl
-0E9D D006      3042            pop     ar6
-0E9F D005      3043            pop     ar5
-0EA1 D004      3044            pop     ar4
-0EA3 D003      3045            pop     ar3
-0EA5 D002      3046            pop     ar2
-0EA7 7430      3047            mov     a,#0x30
-0EA9 2F        3048            add     a,r7
-0EAA 8C82      3049            mov     dpl,r4
-0EAC 8D83      3050            mov     dph,r5
-0EAE 8EF0      3051            mov     b,r6
-0EB0 120100    3052            lcall   __gptrput
-0EB3           3053   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:640: phase_string[count+3]=' ';
-0EB3 7403      3054            mov     a,#0x03
-0EB5 2B        3055            add     a,r3
-0EB6 FC        3056            mov     r4,a
-0EB7 E4        3057            clr     a
-0EB8 3A        3058            addc    a,r2
-0EB9 FD        3059            mov     r5,a
-0EBA EC        3060            mov     a,r4
-0EBB 2540      3061            add     a,_main_phase_string_1_95
-0EBD FC        3062            mov     r4,a
-0EBE ED        3063            mov     a,r5
-0EBF 3541      3064            addc    a,(_main_phase_string_1_95 + 1)
-0EC1 FD        3065            mov     r5,a
-0EC2 AE42      3066            mov     r6,(_main_phase_string_1_95 + 2)
-0EC4 8C82      3067            mov     dpl,r4
-0EC6 8D83      3068            mov     dph,r5
-0EC8 8EF0      3069            mov     b,r6
-0ECA 7420      3070            mov     a,#0x20
-0ECC 120100    3071            lcall   __gptrput
-0ECF           3072   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:641: Vrms_ref_int/=10;
-0ECF 75000A    3073            mov     __divsint_PARM_2,#0x0A
-0ED2 E4        3074            clr     a
-0ED3 F501      3075            mov     (__divsint_PARM_2 + 1),a
-0ED5 85E082    3076            mov     dpl,_main_Vrms_ref_int_1_95
-0ED8 85E183    3077            mov     dph,(_main_Vrms_ref_int_1_95 + 1)
-0EDB C002      3078            push    ar2
-0EDD C003      3079            push    ar3
-0EDF 120100    3080            lcall   __divsint
-0EE2 8582E0    3081            mov     _main_Vrms_ref_int_1_95,dpl
-0EE5 8583E1    3082            mov     (_main_Vrms_ref_int_1_95 + 1),dph
-0EE8 D003      3083            pop     ar3
-0EEA D002      3084            pop     ar2
-0EEC           3085   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:642: count++;
-0EEC 0B        3086            inc     r3
-0EED BB0088    3087            cjne    r3,#0x00,L024050?
-0EF0 0A        3088            inc     r2
-0EF1           3089   L024050?:
-0EF1 020100    3090            ljmp    L024012?
-0EF4           3091   L024014?:
-0EF4           3092   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:645: phase_string[count]='\0';         
-0EF4 EB        3093            mov     a,r3
-0EF5 2540      3094            add     a,_main_phase_string_1_95
-0EF7 FB        3095            mov     r3,a
-0EF8 EA        3096            mov     a,r2
-0EF9 3541      3097            addc    a,(_main_phase_string_1_95 + 1)
-0EFB FA        3098            mov     r2,a
-0EFC AC42      3099            mov     r4,(_main_phase_string_1_95 + 2)
-0EFE 8B82      3100            mov     dpl,r3
-0F00 8A83      3101            mov     dph,r2
-0F02 8CF0      3102            mov     b,r4
-0F04 E4        3103            clr     a
-0F05 120100    3104            lcall   __gptrput
-0F08           3105   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:650: LCDprint("Vr   Vt   Phase ", 1,1);
-0F08 75F001    3106            mov     _LCDprint_PARM_2,#0x01
-0F0B D2D0      3107            setb    _LCDprint_PARM_3
-0F0D 90DCC8    3108            mov     dptr,#__str_7
-0F10 75F080    3109            mov     b,#0x80
-0F13 120100    3110            lcall   _LCDprint
-0F16           3111   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:651: LCDprint_inv(phase_string, 2, 1);
-0F16 75A002    3112            mov     _LCDprint_inv_PARM_2,#0x02
-0F19 D280      3113            setb    _LCDprint_inv_PARM_3
-0F1B 854082    3114            mov     dpl,_main_phase_string_1_95
-0F1E 854183    3115            mov     dph,(_main_phase_string_1_95 + 1)
-0F21 8542F0    3116            mov     b,(_main_phase_string_1_95 + 2)
-0F24 120100    3117            lcall   _LCDprint_inv
-0F27           3118   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:652: waitms(500);
-0F27 9001F4    3119            mov     dptr,#0x01F4
-0F2A 120100    3120            lcall   _waitms
-0F2D           3121   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:655: for(count=0;count<15;count++){
-0F2D 7A00      3122            mov     r2,#0x00
-0F2F 7B00      3123            mov     r3,#0x00
-0F31           3124   L024018?:
-0F31 C3        3125            clr     c
-0F32 EA        3126            mov     a,r2
-0F33 940F      3127            subb    a,#0x0F
-0F35 EB        3128            mov     a,r3
-0F36 6480      3129            xrl     a,#0x80
-0F38 9480      3130            subb    a,#0x80
-0F3A 5001      3131            jnc     L024021?
-0F3C           3132   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:656: phase_string[count]=' ';
-0F3C EA        3133            mov     a,r2
-0F3D 2540      3134            add     a,_main_phase_string_1_95
-0F3F FC        3135            mov     r4,a
-0F40 EB        3136            mov     a,r3
-0F41 3541      3137            addc    a,(_main_phase_string_1_95 + 1)
-0F43 FD        3138            mov     r5,a
-0F44 AE42      3139            mov     r6,(_main_phase_string_1_95 + 2)
-0F46 8C82      3140            mov     dpl,r4
-0F48 8D83      3141            mov     dph,r5
-0F4A 8EF0      3142            mov     b,r6
-0F4C 7420      3143            mov     a,#0x20
-0F4E 120100    3144            lcall   __gptrput
-0F51           3145   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:655: for(count=0;count<15;count++){
-0F51 0A        3146            inc     r2
-0F52 BA0008    3147            cjne    r2,#0x00,L024018?
-0F55 0B        3148            inc     r3
-0F56 8001      3149            sjmp    L024018?
-0F58           3150   L024021?:
-0F58           3151   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:658: phase_string[count+1]='\0';
-0F58 0A        3152            inc     r2
-0F59 BA0088    3153            cjne    r2,#0x00,L024052?
-0F5C 0B        3154            inc     r3
-0F5D           3155   L024052?:
-0F5D EA        3156            mov     a,r2
-0F5E 2540      3157            add     a,_main_phase_string_1_95
-0F60 FA        3158            mov     r2,a
-0F61 EB        3159            mov     a,r3
-0F62 3541      3160            addc    a,(_main_phase_string_1_95 + 1)
-0F64 FB        3161            mov     r3,a
-0F65 AC42      3162            mov     r4,(_main_phase_string_1_95 + 2)
-0F67 8A82      3163            mov     dpl,r2
-0F69 8B83      3164            mov     dph,r3
-0F6B 8CF0      3165            mov     b,r4
-0F6D E4        3166            clr     a
-0F6E 120100    3167            lcall   __gptrput
-0F71 020100    3168            ljmp    L024016?
-0F74           3169            rseg R_CSEG
-0F74           3170   
-0000           3171            rseg R_XINIT
-0000           3172   
-0000           3173            rseg R_CONST
-0000           3174   __str_0:
-0000 1B        3175            db 0x1B
-0001 5B324A    3176            db '[2J'
-0004 00        3177            db 0x00
-0005           3178   __str_1:
-0005 41444320  3179            db 'ADC test program'
+0BF2           2664   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:586: phase_diff_int= Get_Phase_diff (Period_ref);//(Period_ref)+Period_test)/2);
+0BF2 855082    2665            mov     dpl,_main_Period_ref_1_95
+0BF5 855183    2666            mov     dph,(_main_Period_ref_1_95 + 1)
+0BF8 8552F0    2667            mov     b,(_main_Period_ref_1_95 + 2)
+0BFB E553      2668            mov     a,(_main_Period_ref_1_95 + 3)
+0BFD 120100    2669            lcall   _Get_Phase_diff
+0C00 8582F0    2670            mov     _main_phase_diff_int_1_95,dpl
+0C03 8583F1    2671            mov     (_main_phase_diff_int_1_95 + 1),dph
+0C06           2672   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:593: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+0C06 7428      2673            mov     a,#__str_0
+0C08 C0E0      2674            push    acc
+0C0A 74D6      2675            mov     a,#(__str_0 >> 8)
+0C0C C0E0      2676            push    acc
+0C0E 7480      2677            mov     a,#0x80
+0C10 C0E0      2678            push    acc
+0C12 120100    2679            lcall   _printf
+0C15 1581      2680            dec     sp
+0C17 1581      2681            dec     sp
+0C19 1581      2682            dec     sp
+0C1B           2683   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:595: Vrms_ref_int=Vrms_ref*1000;
+0C1B C0B0      2684            push    _main_Vrms_ref_1_95
+0C1D C0B1      2685            push    (_main_Vrms_ref_1_95 + 1)
+0C1F C0B2      2686            push    (_main_Vrms_ref_1_95 + 2)
+0C21 C0B3      2687            push    (_main_Vrms_ref_1_95 + 3)
+0C23 900000    2688            mov     dptr,#0x0000
+0C26 75F07A    2689            mov     b,#0x7A
+0C29 7444      2690            mov     a,#0x44
+0C2B 120100    2691            lcall   ___fsmul
+0C2E AE82      2692            mov     r6,dpl
+0C30 AF83      2693            mov     r7,dph
+0C32 A8F0      2694            mov     r0,b
+0C34 FD        2695            mov     r5,a
+0C35 E581      2696            mov     a,sp
+0C37 24FC      2697            add     a,#0xfc
+0C39 F581      2698            mov     sp,a
+0C3B 8E82      2699            mov     dpl,r6
+0C3D 8F83      2700            mov     dph,r7
+0C3F 88F0      2701            mov     b,r0
+0C41 ED        2702            mov     a,r5
+0C42 120100    2703            lcall   ___fs2sint
+0C45 8582E0    2704            mov     _main_Vrms_ref_int_1_95,dpl
+0C48 8583E1    2705            mov     (_main_Vrms_ref_int_1_95 + 1),dph
+0C4B           2706   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:596: Vrms_test_int=Vrms_test*1000;
+0C4B C000      2707            push    _main_Vrms_test_1_95
+0C4D C001      2708            push    (_main_Vrms_test_1_95 + 1)
+0C4F C002      2709            push    (_main_Vrms_test_1_95 + 2)
+0C51 C003      2710            push    (_main_Vrms_test_1_95 + 3)
+0C53 900000    2711            mov     dptr,#0x0000
+0C56 75F07A    2712            mov     b,#0x7A
+0C59 7444      2713            mov     a,#0x44
+0C5B 120100    2714            lcall   ___fsmul
+0C5E AF82      2715            mov     r7,dpl
+0C60 A883      2716            mov     r0,dph
+0C62 A9F0      2717            mov     r1,b
+0C64 FD        2718            mov     r5,a
+0C65 E581      2719            mov     a,sp
+0C67 24FC      2720            add     a,#0xfc
+0C69 F581      2721            mov     sp,a
+0C6B 8F82      2722            mov     dpl,r7
+0C6D 8883      2723            mov     dph,r0
+0C6F 89F0      2724            mov     b,r1
+0C71 ED        2725            mov     a,r5
+0C72 120100    2726            lcall   ___fs2sint
+0C75 858290    2727            mov     _main_Vrms_test_int_1_95,dpl
+0C78 858391    2728            mov     (_main_Vrms_test_int_1_95 + 1),dph
+0C7B           2729   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:599: if (P0_6!=1){
+0C7B 3086E8    2730            jnb     _P0_6,L024043?
+0C7E 020100    2731            ljmp    L024002?
+0C81           2732   L024043?:
+0C81           2733   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:600: printf("1000\r\n");
+0C81 7468      2734            mov     a,#__str_5
+0C83 C0E0      2735            push    acc
+0C85 74D8      2736            mov     a,#(__str_5 >> 8)
+0C87 C0E0      2737            push    acc
+0C89 7480      2738            mov     a,#0x80
+0C8B C0E0      2739            push    acc
+0C8D 120100    2740            lcall   _printf
+0C90 1581      2741            dec     sp
+0C92 1581      2742            dec     sp
+0C94 1581      2743            dec     sp
+0C96           2744   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:601: printf("1000\r\n");
+0C96 7468      2745            mov     a,#__str_5
+0C98 C0E0      2746            push    acc
+0C9A 74D8      2747            mov     a,#(__str_5 >> 8)
+0C9C C0E0      2748            push    acc
+0C9E 7480      2749            mov     a,#0x80
+0CA0 C0E0      2750            push    acc
+0CA2 120100    2751            lcall   _printf
+0CA5 1581      2752            dec     sp
+0CA7 1581      2753            dec     sp
+0CA9 1581      2754            dec     sp
+0CAB           2755   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:602: printf("%f \r\n %f \r\n %i\r\n", Vrms_ref*1.41421356, Vrms_test*1.41421356, phase_diff_int);
+0CAB C000      2756            push    _main_Vrms_test_1_95
+0CAD C001      2757            push    (_main_Vrms_test_1_95 + 1)
+0CAF C002      2758            push    (_main_Vrms_test_1_95 + 2)
+0CB1 C003      2759            push    (_main_Vrms_test_1_95 + 3)
+0CB3 9004F3    2760            mov     dptr,#0x04F3
+0CB6 75F0B5    2761            mov     b,#0xB5
+0CB9 743F      2762            mov     a,#0x3F
+0CBB 120100    2763            lcall   ___fsmul
+0CBE AF82      2764            mov     r7,dpl
+0CC0 A883      2765            mov     r0,dph
+0CC2 A9F0      2766            mov     r1,b
+0CC4 FD        2767            mov     r5,a
+0CC5 E581      2768            mov     a,sp
+0CC7 24FC      2769            add     a,#0xfc
+0CC9 F581      2770            mov     sp,a
+0CCB C005      2771            push    ar5
+0CCD C007      2772            push    ar7
+0CCF C000      2773            push    ar0
+0CD1 C001      2774            push    ar1
+0CD3 C0B0      2775            push    _main_Vrms_ref_1_95
+0CD5 C0B1      2776            push    (_main_Vrms_ref_1_95 + 1)
+0CD7 C0B2      2777            push    (_main_Vrms_ref_1_95 + 2)
+0CD9 C0B3      2778            push    (_main_Vrms_ref_1_95 + 3)
+0CDB 9004F3    2779            mov     dptr,#0x04F3
+0CDE 75F0B5    2780            mov     b,#0xB5
+0CE1 743F      2781            mov     a,#0x3F
+0CE3 120100    2782            lcall   ___fsmul
+0CE6 AE82      2783            mov     r6,dpl
+0CE8 AA83      2784            mov     r2,dph
+0CEA ABF0      2785            mov     r3,b
+0CEC FC        2786            mov     r4,a
+0CED E581      2787            mov     a,sp
+0CEF 24FC      2788            add     a,#0xfc
+0CF1 F581      2789            mov     sp,a
+0CF3 D001      2790            pop     ar1
+0CF5 D000      2791            pop     ar0
+0CF7 D007      2792            pop     ar7
+0CF9 D005      2793            pop     ar5
+0CFB C0F0      2794            push    _main_phase_diff_int_1_95
+0CFD C0F1      2795            push    (_main_phase_diff_int_1_95 + 1)
+0CFF C007      2796            push    ar7
+0D01 C000      2797            push    ar0
+0D03 C001      2798            push    ar1
+0D05 C005      2799            push    ar5
+0D07 C006      2800            push    ar6
+0D09 C002      2801            push    ar2
+0D0B C003      2802            push    ar3
+0D0D C004      2803            push    ar4
+0D0F 74A8      2804            mov     a,#__str_6
+0D11 C0E0      2805            push    acc
+0D13 74D8      2806            mov     a,#(__str_6 >> 8)
+0D15 C0E0      2807            push    acc
+0D17 7480      2808            mov     a,#0x80
+0D19 C0E0      2809            push    acc
+0D1B 120100    2810            lcall   _printf
+0D1E E581      2811            mov     a,sp
+0D20 24F3      2812            add     a,#0xf3
+0D22 F581      2813            mov     sp,a
+0D24           2814   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:603: printf("1001\r\n");
+0D24 74E8      2815            mov     a,#__str_7
+0D26 C0E0      2816            push    acc
+0D28 74D8      2817            mov     a,#(__str_7 >> 8)
+0D2A C0E0      2818            push    acc
+0D2C 7480      2819            mov     a,#0x80
+0D2E C0E0      2820            push    acc
+0D30 120100    2821            lcall   _printf
+0D33 1581      2822            dec     sp
+0D35 1581      2823            dec     sp
+0D37 1581      2824            dec     sp
+0D39           2825   L024002?:
+0D39           2826   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:607: neg_flag=0;
+0D39           2827   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:608: if (phase_diff_int<0){
+0D39 E4        2828            clr     a
+0D3A FA        2829            mov     r2,a
+0D3B FB        2830            mov     r3,a
+0D3C E5F1      2831            mov     a,(_main_phase_diff_int_1_95 + 1)
+0D3E 30E728    2832            jnb     acc.7,L024029?
+0D41           2833   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:609: neg_flag=1;
+0D41 7A01      2834            mov     r2,#0x01
+0D43 7B00      2835            mov     r3,#0x00
+0D45           2836   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:610: phase_diff_int=-phase_diff_int;
+0D45 C3        2837            clr     c
+0D46 E4        2838            clr     a
+0D47 95F0      2839            subb    a,_main_phase_diff_int_1_95
+0D49 F5F0      2840            mov     _main_phase_diff_int_1_95,a
+0D4B E4        2841            clr     a
+0D4C 95F1      2842            subb    a,(_main_phase_diff_int_1_95 + 1)
+0D4E F5F1      2843            mov     (_main_phase_diff_int_1_95 + 1),a
+0D50           2844   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:615: while(phase_diff_int)
+0D50           2845   L024029?:
+0D50 E4        2846            clr     a
+0D51 BA0168    2847            cjne    r2,#0x01,L024045?
+0D54 BB0068    2848            cjne    r3,#0x00,L024045?
+0D57 04        2849            inc     a
+0D58           2850   L024045?:
+0D58 FA        2851            mov     r2,a
+0D59 7B00      2852            mov     r3,#0x00
+0D5B 7C00      2853            mov     r4,#0x00
+0D5D           2854   L024008?:
+0D5D E5F0      2855            mov     a,_main_phase_diff_int_1_95
+0D5F 45F1      2856            orl     a,(_main_phase_diff_int_1_95 + 1)
+0D61 7001      2857            jnz     L024047?
+0D63 020100    2858            ljmp    L024010?
+0D66           2859   L024047?:
+0D66           2860   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:617: phase_string[count] = 48+phase_diff_int%10;
+0D66 EB        2861            mov     a,r3
+0D67 2540      2862            add     a,_main_phase_string_1_95
+0D69 FD        2863            mov     r5,a
+0D6A EC        2864            mov     a,r4
+0D6B 3541      2865            addc    a,(_main_phase_string_1_95 + 1)
+0D6D FE        2866            mov     r6,a
+0D6E AF42      2867            mov     r7,(_main_phase_string_1_95 + 2)
+0D70 75000A    2868            mov     __modsint_PARM_2,#0x0A
+0D73 E4        2869            clr     a
+0D74 F501      2870            mov     (__modsint_PARM_2 + 1),a
+0D76 85F082    2871            mov     dpl,_main_phase_diff_int_1_95
+0D79 85F183    2872            mov     dph,(_main_phase_diff_int_1_95 + 1)
+0D7C C002      2873            push    ar2
+0D7E C003      2874            push    ar3
+0D80 C004      2875            push    ar4
+0D82 C005      2876            push    ar5
+0D84 C006      2877            push    ar6
+0D86 C007      2878            push    ar7
+0D88 120100    2879            lcall   __modsint
+0D8B A882      2880            mov     r0,dpl
+0D8D D007      2881            pop     ar7
+0D8F D006      2882            pop     ar6
+0D91 D005      2883            pop     ar5
+0D93 D004      2884            pop     ar4
+0D95 D003      2885            pop     ar3
+0D97 7430      2886            mov     a,#0x30
+0D99 28        2887            add     a,r0
+0D9A 8D82      2888            mov     dpl,r5
+0D9C 8E83      2889            mov     dph,r6
+0D9E 8FF0      2890            mov     b,r7
+0DA0 120100    2891            lcall   __gptrput
+0DA3           2892   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:618: phase_string[count+3]=' ';
+0DA3 7403      2893            mov     a,#0x03
+0DA5 2B        2894            add     a,r3
+0DA6 FD        2895            mov     r5,a
+0DA7 E4        2896            clr     a
+0DA8 3C        2897            addc    a,r4
+0DA9 FE        2898            mov     r6,a
+0DAA ED        2899            mov     a,r5
+0DAB 2540      2900            add     a,_main_phase_string_1_95
+0DAD FD        2901            mov     r5,a
+0DAE EE        2902            mov     a,r6
+0DAF 3541      2903            addc    a,(_main_phase_string_1_95 + 1)
+0DB1 FE        2904            mov     r6,a
+0DB2 AF42      2905            mov     r7,(_main_phase_string_1_95 + 2)
+0DB4 8D82      2906            mov     dpl,r5
+0DB6 8E83      2907            mov     dph,r6
+0DB8 8FF0      2908            mov     b,r7
+0DBA 7420      2909            mov     a,#0x20
+0DBC 120100    2910            lcall   __gptrput
+0DBF           2911   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:620: phase_diff_int /= 10;
+0DBF 75000A    2912            mov     __divsint_PARM_2,#0x0A
+0DC2 E4        2913            clr     a
+0DC3 F501      2914            mov     (__divsint_PARM_2 + 1),a
+0DC5 85F082    2915            mov     dpl,_main_phase_diff_int_1_95
+0DC8 85F183    2916            mov     dph,(_main_phase_diff_int_1_95 + 1)
+0DCB C003      2917            push    ar3
+0DCD C004      2918            push    ar4
+0DCF 120100    2919            lcall   __divsint
+0DD2 8582F0    2920            mov     _main_phase_diff_int_1_95,dpl
+0DD5 8583F1    2921            mov     (_main_phase_diff_int_1_95 + 1),dph
+0DD8 D004      2922            pop     ar4
+0DDA D003      2923            pop     ar3
+0DDC D002      2924            pop     ar2
+0DDE           2925   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:621: count++;
+0DDE 0B        2926            inc     r3
+0DDF BB0088    2927            cjne    r3,#0x00,L024048?
+0DE2 0C        2928            inc     r4
+0DE3           2929   L024048?:
+0DE3           2930   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:623: if(neg_flag==1&&phase_diff_int==0){
+0DE3 EA        2931            mov     a,r2
+0DE4 7001      2932            jnz     L024049?
+0DE6 020100    2933            ljmp    L024008?
+0DE9           2934   L024049?:
+0DE9 E5F0      2935            mov     a,_main_phase_diff_int_1_95
+0DEB 45F1      2936            orl     a,(_main_phase_diff_int_1_95 + 1)
+0DED 6001      2937            jz      L024050?
+0DEF 020100    2938            ljmp    L024008?
+0DF2           2939   L024050?:
+0DF2           2940   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:624: phase_string[count]='-';
+0DF2 EB        2941            mov     a,r3
+0DF3 2540      2942            add     a,_main_phase_string_1_95
+0DF5 FD        2943            mov     r5,a
+0DF6 EC        2944            mov     a,r4
+0DF7 3541      2945            addc    a,(_main_phase_string_1_95 + 1)
+0DF9 FE        2946            mov     r6,a
+0DFA AF42      2947            mov     r7,(_main_phase_string_1_95 + 2)
+0DFC 8D82      2948            mov     dpl,r5
+0DFE 8E83      2949            mov     dph,r6
+0E00 8FF0      2950            mov     b,r7
+0E02 742D      2951            mov     a,#0x2D
+0E04 120100    2952            lcall   __gptrput
+0E07 020100    2953            ljmp    L024008?
+0E0A           2954   L024010?:
+0E0A           2955   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:631: count+=2;
+0E0A 7402      2956            mov     a,#0x02
+0E0C 2B        2957            add     a,r3
+0E0D FB        2958            mov     r3,a
+0E0E E4        2959            clr     a
+0E0F 3C        2960            addc    a,r4
+0E10 FA        2961            mov     r2,a
+0E11           2962   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:633: while(Vrms_test_int)
+0E11 8B04      2963            mov     ar4,r3
+0E13 8A05      2964            mov     ar5,r2
+0E15           2965   L024011?:
+0E15 E590      2966            mov     a,_main_Vrms_test_int_1_95
+0E17 4591      2967            orl     a,(_main_Vrms_test_int_1_95 + 1)
+0E19 6001      2968            jz      L024013?
+0E1B           2969   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:635: phase_string[count]= 48+Vrms_test_int%10;
+0E1B EC        2970            mov     a,r4
+0E1C 2540      2971            add     a,_main_phase_string_1_95
+0E1E F520      2972            mov     _main_sloc0_1_0,a
+0E20 ED        2973            mov     a,r5
+0E21 3541      2974            addc    a,(_main_phase_string_1_95 + 1)
+0E23 F521      2975            mov     (_main_sloc0_1_0 + 1),a
+0E25 854222    2976            mov     (_main_sloc0_1_0 + 2),(_main_phase_string_1_95 + 2)
+0E28 75000A    2977            mov     __modsint_PARM_2,#0x0A
+0E2B E4        2978            clr     a
+0E2C F501      2979            mov     (__modsint_PARM_2 + 1),a
+0E2E 859082    2980            mov     dpl,_main_Vrms_test_int_1_95
+0E31 859183    2981            mov     dph,(_main_Vrms_test_int_1_95 + 1)
+0E34 C004      2982            push    ar4
+0E36 C005      2983            push    ar5
+0E38 120100    2984            lcall   __modsint
+0E3B A982      2985            mov     r1,dpl
+0E3D D005      2986            pop     ar5
+0E3F D004      2987            pop     ar4
+0E41 7430      2988            mov     a,#0x30
+0E43 29        2989            add     a,r1
+0E44 852082    2990            mov     dpl,_main_sloc0_1_0
+0E47 852183    2991            mov     dph,(_main_sloc0_1_0 + 1)
+0E4A 8522F0    2992            mov     b,(_main_sloc0_1_0 + 2)
+0E4D 120100    2993            lcall   __gptrput
+0E50           2994   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:636: phase_string[count+3]=' ';
+0E50 7403      2995            mov     a,#0x03
+0E52 2C        2996            add     a,r4
+0E53 FE        2997            mov     r6,a
+0E54 E4        2998            clr     a
+0E55 3D        2999            addc    a,r5
+0E56 FF        3000            mov     r7,a
+0E57 EE        3001            mov     a,r6
+0E58 2540      3002            add     a,_main_phase_string_1_95
+0E5A FE        3003            mov     r6,a
+0E5B EF        3004            mov     a,r7
+0E5C 3541      3005            addc    a,(_main_phase_string_1_95 + 1)
+0E5E FF        3006            mov     r7,a
+0E5F A842      3007            mov     r0,(_main_phase_string_1_95 + 2)
+0E61 8E82      3008            mov     dpl,r6
+0E63 8F83      3009            mov     dph,r7
+0E65 88F0      3010            mov     b,r0
+0E67 7420      3011            mov     a,#0x20
+0E69 120100    3012            lcall   __gptrput
+0E6C           3013   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:637: Vrms_test_int/=10;
+0E6C 75000A    3014            mov     __divsint_PARM_2,#0x0A
+0E6F E4        3015            clr     a
+0E70 F501      3016            mov     (__divsint_PARM_2 + 1),a
+0E72 859082    3017            mov     dpl,_main_Vrms_test_int_1_95
+0E75 859183    3018            mov     dph,(_main_Vrms_test_int_1_95 + 1)
+0E78 C004      3019            push    ar4
+0E7A C005      3020            push    ar5
+0E7C 120100    3021            lcall   __divsint
+0E7F 858290    3022            mov     _main_Vrms_test_int_1_95,dpl
+0E82 858391    3023            mov     (_main_Vrms_test_int_1_95 + 1),dph
+0E85 D005      3024            pop     ar5
+0E87 D004      3025            pop     ar4
+0E89           3026   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:639: count++;
+0E89 0C        3027            inc     r4
+0E8A BC0048    3028            cjne    r4,#0x00,L024011?
+0E8D 0D        3029            inc     r5
+0E8E 8001      3030            sjmp    L024011?
+0E90           3031   L024013?:
+0E90           3032   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:642: count+=1;
+0E90 7401      3033            mov     a,#0x01
+0E92 2C        3034            add     a,r4
+0E93 FB        3035            mov     r3,a
+0E94 E4        3036            clr     a
+0E95 3D        3037            addc    a,r5
+0E96 FA        3038            mov     r2,a
+0E97           3039   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:644: while(Vrms_ref_int){
+0E97           3040   L024014?:
+0E97 E5E0      3041            mov     a,_main_Vrms_ref_int_1_95
+0E99 45E1      3042            orl     a,(_main_Vrms_ref_int_1_95 + 1)
+0E9B 6001      3043            jz      L024016?
+0E9D           3044   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:645: phase_string[count]=48+Vrms_ref_int%10;
+0E9D EB        3045            mov     a,r3
+0E9E 2540      3046            add     a,_main_phase_string_1_95
+0EA0 FC        3047            mov     r4,a
+0EA1 EA        3048            mov     a,r2
+0EA2 3541      3049            addc    a,(_main_phase_string_1_95 + 1)
+0EA4 FD        3050            mov     r5,a
+0EA5 AE42      3051            mov     r6,(_main_phase_string_1_95 + 2)
+0EA7 75000A    3052            mov     __modsint_PARM_2,#0x0A
+0EAA E4        3053            clr     a
+0EAB F501      3054            mov     (__modsint_PARM_2 + 1),a
+0EAD 85E082    3055            mov     dpl,_main_Vrms_ref_int_1_95
+0EB0 85E183    3056            mov     dph,(_main_Vrms_ref_int_1_95 + 1)
+0EB3 C002      3057            push    ar2
+0EB5 C003      3058            push    ar3
+0EB7 C004      3059            push    ar4
+0EB9 C005      3060            push    ar5
+0EBB C006      3061            push    ar6
+0EBD 120100    3062            lcall   __modsint
+0EC0 AF82      3063            mov     r7,dpl
+0EC2 D006      3064            pop     ar6
+0EC4 D005      3065            pop     ar5
+0EC6 D004      3066            pop     ar4
+0EC8 D003      3067            pop     ar3
+0ECA D002      3068            pop     ar2
+0ECC 7430      3069            mov     a,#0x30
+0ECE 2F        3070            add     a,r7
+0ECF 8C82      3071            mov     dpl,r4
+0ED1 8D83      3072            mov     dph,r5
+0ED3 8EF0      3073            mov     b,r6
+0ED5 120100    3074            lcall   __gptrput
+0ED8           3075   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:646: phase_string[count+3]=' ';
+0ED8 7403      3076            mov     a,#0x03
+0EDA 2B        3077            add     a,r3
+0EDB FC        3078            mov     r4,a
+0EDC E4        3079            clr     a
+0EDD 3A        3080            addc    a,r2
+0EDE FD        3081            mov     r5,a
+0EDF EC        3082            mov     a,r4
+0EE0 2540      3083            add     a,_main_phase_string_1_95
+0EE2 FC        3084            mov     r4,a
+0EE3 ED        3085            mov     a,r5
+0EE4 3541      3086            addc    a,(_main_phase_string_1_95 + 1)
+0EE6 FD        3087            mov     r5,a
+0EE7 AE42      3088            mov     r6,(_main_phase_string_1_95 + 2)
+0EE9 8C82      3089            mov     dpl,r4
+0EEB 8D83      3090            mov     dph,r5
+0EED 8EF0      3091            mov     b,r6
+0EEF 7420      3092            mov     a,#0x20
+0EF1 120100    3093            lcall   __gptrput
+0EF4           3094   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:647: Vrms_ref_int/=10;
+0EF4 75000A    3095            mov     __divsint_PARM_2,#0x0A
+0EF7 E4        3096            clr     a
+0EF8 F501      3097            mov     (__divsint_PARM_2 + 1),a
+0EFA 85E082    3098            mov     dpl,_main_Vrms_ref_int_1_95
+0EFD 85E183    3099            mov     dph,(_main_Vrms_ref_int_1_95 + 1)
+0F00 C002      3100            push    ar2
+0F02 C003      3101            push    ar3
+0F04 120100    3102            lcall   __divsint
+0F07 8582E0    3103            mov     _main_Vrms_ref_int_1_95,dpl
+0F0A 8583E1    3104            mov     (_main_Vrms_ref_int_1_95 + 1),dph
+0F0D D003      3105            pop     ar3
+0F0F D002      3106            pop     ar2
+0F11           3107   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:648: count++;
+0F11 0B        3108            inc     r3
+0F12 BB0048    3109            cjne    r3,#0x00,L024054?
+0F15 0A        3110            inc     r2
+0F16           3111   L024054?:
+0F16 020100    3112            ljmp    L024014?
+0F19           3113   L024016?:
+0F19           3114   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:651: phase_string[count]='\0';         
+0F19 EB        3115            mov     a,r3
+0F1A 2540      3116            add     a,_main_phase_string_1_95
+0F1C FB        3117            mov     r3,a
+0F1D EA        3118            mov     a,r2
+0F1E 3541      3119            addc    a,(_main_phase_string_1_95 + 1)
+0F20 FA        3120            mov     r2,a
+0F21 AC42      3121            mov     r4,(_main_phase_string_1_95 + 2)
+0F23 8B82      3122            mov     dpl,r3
+0F25 8A83      3123            mov     dph,r2
+0F27 8CF0      3124            mov     b,r4
+0F29 E4        3125            clr     a
+0F2A 120100    3126            lcall   __gptrput
+0F2D           3127   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:656: LCDprint("Vr   Vt   Phase ", 1,1);
+0F2D 75F001    3128            mov     _LCDprint_PARM_2,#0x01
+0F30 D2D0      3129            setb    _LCDprint_PARM_3
+0F32 90DD88    3130            mov     dptr,#__str_8
+0F35 75F080    3131            mov     b,#0x80
+0F38 120100    3132            lcall   _LCDprint
+0F3B           3133   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:657: LCDprint_inv(phase_string, 2, 1);
+0F3B 75A002    3134            mov     _LCDprint_inv_PARM_2,#0x02
+0F3E D280      3135            setb    _LCDprint_inv_PARM_3
+0F40 854082    3136            mov     dpl,_main_phase_string_1_95
+0F43 854183    3137            mov     dph,(_main_phase_string_1_95 + 1)
+0F46 8542F0    3138            mov     b,(_main_phase_string_1_95 + 2)
+0F49 120100    3139            lcall   _LCDprint_inv
+0F4C           3140   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:658: waitms(500);
+0F4C 9001F4    3141            mov     dptr,#0x01F4
+0F4F 120100    3142            lcall   _waitms
+0F52           3143   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:661: for(count=0;count<15;count++){
+0F52 7A00      3144            mov     r2,#0x00
+0F54 7B00      3145            mov     r3,#0x00
+0F56           3146   L024020?:
+0F56 C3        3147            clr     c
+0F57 EA        3148            mov     a,r2
+0F58 940F      3149            subb    a,#0x0F
+0F5A EB        3150            mov     a,r3
+0F5B 6480      3151            xrl     a,#0x80
+0F5D 9480      3152            subb    a,#0x80
+0F5F 5001      3153            jnc     L024023?
+0F61           3154   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:662: phase_string[count]=' ';
+0F61 EA        3155            mov     a,r2
+0F62 2540      3156            add     a,_main_phase_string_1_95
+0F64 FC        3157            mov     r4,a
+0F65 EB        3158            mov     a,r3
+0F66 3541      3159            addc    a,(_main_phase_string_1_95 + 1)
+0F68 FD        3160            mov     r5,a
+0F69 AE42      3161            mov     r6,(_main_phase_string_1_95 + 2)
+0F6B 8C82      3162            mov     dpl,r4
+0F6D 8D83      3163            mov     dph,r5
+0F6F 8EF0      3164            mov     b,r6
+0F71 7420      3165            mov     a,#0x20
+0F73 120100    3166            lcall   __gptrput
+0F76           3167   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:661: for(count=0;count<15;count++){
+0F76 0A        3168            inc     r2
+0F77 BA00C8    3169            cjne    r2,#0x00,L024020?
+0F7A 0B        3170            inc     r3
+0F7B 8001      3171            sjmp    L024020?
+0F7D           3172   L024023?:
+0F7D           3173   ;        C:\Users\carso\Documents\1. School\0. Spring 2018\Elec 292\lab5\mag_phase_EFM8.c:664: phase_string[count+1]='\0';
+0F7D 0A        3174            inc     r2
+0F7E BA0048    3175            cjne    r2,#0x00,L024056?
+0F81 0B        3176            inc     r3
+0F82           3177   L024056?:
+0F82 EA        3178            mov     a,r2
+0F83 2540      3179            add     a,_main_phase_string_1_95
+0F85 FA        3180            mov     r2,a
+0F86 EB        3181            mov     a,r3
+0F87 3541      3182            addc    a,(_main_phase_string_1_95 + 1)
+0F89 FB        3183            mov     r3,a
+0F8A AC42      3184            mov     r4,(_main_phase_string_1_95 + 2)
+0F8C 8A82      3185            mov     dpl,r2
+0F8E 8B83      3186            mov     dph,r3
+0F90 8CF0      3187            mov     b,r4
+0F92 E4        3188            clr     a
+0F93 120100    3189            lcall   __gptrput
+0F96 020100    3190            ljmp    L024018?
+0F99           3191            rseg R_CSEG
+0F99           3192   
+0000           3193            rseg R_XINIT
+0000           3194   
+0000           3195            rseg R_CONST
+0000           3196   __str_0:
+0000 1B        3197            db 0x1B
+0001 5B324A    3198            db '[2J'
+0004 00        3199            db 0x00
+0005           3200   __str_1:
+0005 41444320  3201            db 'ADC test program'
      74657374
      2070726F
      6772616D
-0015 0A        3180            db 0x0A
-0016 46696C65  3181            db 'File: %s'
+0015 0A        3202            db 0x0A
+0016 46696C65  3203            db 'File: %s'
      3A202573
-001E 0A        3182            db 0x0A
-001F 436F6D70  3183            db 'Compiled: %s, %s'
+001E 0A        3204            db 0x0A
+001F 436F6D70  3205            db 'Compiled: %s, %s'
      696C6564
      3A202573
      2C202573
-002F 0A        3184            db 0x0A
-0030 0A        3185            db 0x0A
-0031 00        3186            db 0x00
-0032           3187   __str_2:
-0032 433A      3188            db 'C:'
-0034 5C        3189            db 0x5C
-0035 55736572  3190            db 'Users'
+002F 0A        3206            db 0x0A
+0030 0A        3207            db 0x0A
+0031 00        3208            db 0x00
+0032           3209   __str_2:
+0032 433A      3210            db 'C:'
+0034 5C        3211            db 0x5C
+0035 55736572  3212            db 'Users'
      73
-003A 5C        3191            db 0x5C
-003B 63617273  3192            db 'carso'
+003A 5C        3213            db 0x5C
+003B 63617273  3214            db 'carso'
      6F
-0040 5C        3193            db 0x5C
-0041 446F6375  3194            db 'Documents'
+0040 5C        3215            db 0x5C
+0041 446F6375  3216            db 'Documents'
      6D656E74
      73
-004A 5C        3195            db 0x5C
-004B 312E2053  3196            db '1. School'
+004A 5C        3217            db 0x5C
+004B 312E2053  3218            db '1. School'
      63686F6F
      6C
-0054 5C        3197            db 0x5C
-0055 302E2053  3198            db '0. Spring 2018'
+0054 5C        3219            db 0x5C
+0055 302E2053  3220            db '0. Spring 2018'
      7072696E
      67203230
      3138
-0063 5C        3199            db 0x5C
-0064 456C6563  3200            db 'Elec 292'
+0063 5C        3221            db 0x5C
+0064 456C6563  3222            db 'Elec 292'
      20323932
-006C 5C        3201            db 0x5C
-006D 6C        3202            db 'l'
-006E 616235    3203            db 'ab5'
-0071 5C        3204            db 0x5C
-0072 6D61675F  3205            db 'mag_phase_EFM8.c'
+006C 5C        3223            db 0x5C
+006D 6C        3224            db 'l'
+006E 616235    3225            db 'ab5'
+0071 5C        3226            db 0x5C
+0072 6D61675F  3227            db 'mag_phase_EFM8.c'
      70686173
      655F4546
      4D382E63
-0082 00        3206            db 0x00
-0083           3207   __str_3:
-0083 4D617220  3208            db 'Mar  8 2018'
+0082 00        3228            db 0x00
+0083           3229   __str_3:
+0083 4D617220  3230            db 'Mar  8 2018'
      20382032
      303138
-008E 00        3209            db 0x00
-008F           3210   __str_4:
-008F 31333A35  3211            db '13:55:51'
-     353A3531
-0097 00        3212            db 0x00
-0098           3213   __str_5:
-0098 56405031  3214            db 'V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%l'
-     2E353D25
-     372E3566
-     562C2056
-     4050312E
-     363D2537
-     2E356656
-     2C205065
-     72696F64
-     5F726566
-     3D256C66
-     2C205065
-     72696F64
-     5F746573
-     743D256C
-00D4 662C2070  3215            db 'f, phase diff=%i '
-     68617365
-     20646966
-     663D2569
-     20
-00E5 0D        3216            db 0x0D
-00E6 00        3217            db 0x00
-00E7           3218   __str_6:
-00E7 256C66    3219            db '%lf'
-00EA 0D        3220            db 0x0D
-00EB 0A        3221            db 0x0A
-00EC 20256C66  3222            db ' %lf'
-00F0 0D        3223            db 0x0D
-00F1 0A        3224            db 0x0A
-00F2 202569    3225            db ' %i'
-00F5 0D        3226            db 0x0D
-00F6 0A        3227            db 0x0A
-00F7 00        3228            db 0x00
-00F8           3229   __str_7:
-00F8 56722020  3230            db 'Vr   Vt   Phase '
+008E 00        3231            db 0x00
+008F           3232   __str_4:
+008F 31343A34  3233            db '14:42:59'
+     323A3539
+0097 00        3234            db 0x00
+0098           3235   __str_5:
+0098 31303030  3236            db '1000'
+009C 0D        3237            db 0x0D
+009D 0A        3238            db 0x0A
+009E 00        3239            db 0x00
+009F           3240   __str_6:
+009F 256620    3241            db '%f '
+00A2 0D        3242            db 0x0D
+00A3 0A        3243            db 0x0A
+00A4 20256620  3244            db ' %f '
+00A8 0D        3245            db 0x0D
+00A9 0A        3246            db 0x0A
+00AA 202569    3247            db ' %i'
+00AD 0D        3248            db 0x0D
+00AE 0A        3249            db 0x0A
+00AF 00        3250            db 0x00
+00B0           3251   __str_7:
+00B0 31303031  3252            db '1001'
+00B4 0D        3253            db 0x0D
+00B5 0A        3254            db 0x0A
+00B6 00        3255            db 0x00
+00B7           3256   __str_8:
+00B7 56722020  3257            db 'Vr   Vt   Phase '
      20567420
      20205068
      61736520
-0108 00        3231            db 0x00
-0109           3232   
-0003           3233            CSEG
-0003           3234   
-0003           3235   end
+00C7 00        3258            db 0x00
+00C8           3259   
+0003           3260            CSEG
+0003           3261   
+0003           3262   end

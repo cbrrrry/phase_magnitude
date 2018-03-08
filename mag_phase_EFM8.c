@@ -526,7 +526,7 @@ void main (void)
 {
 	float phase_diff=0.0;
 	float Vrms_ref=0.0;
-	float Vrms_test=0;
+	float Vrms_test=0.0;
 
 	int count=0;
 	int length=0;
@@ -583,7 +583,7 @@ void main (void)
 		 Vrms_test= Get_test_peak(Period_test)/1.41421356;
 		 
 
-		 phase_diff_int= Get_Phase_diff (16.6666666666);//(Period_ref)+Period_test)/2);
+		 phase_diff_int= Get_Phase_diff (Period_ref);//(Period_ref)+Period_test)/2);
 		 
 		
 		
@@ -591,11 +591,17 @@ void main (void)
 			//v[0] = Volts_at_Pin(QFP32_MUX_P1_5); //ref
 			//v[1] = Volts_at_Pin(QFP32_MUX_P1_6); //test
 			printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-			printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);	
+		//	printf ("V@P1.5=%7.5fV, V@P1.6=%7.5fV, Period_ref=%lf, Period_test=%lf, phase diff=%i \r", Vrms_ref, Vrms_test, Period_ref, Period_test, phase_diff_int);	
 			Vrms_ref_int=Vrms_ref*1000;
 			Vrms_test_int=Vrms_test*1000;
 			
-				printf("%lf\r\n %lf\r\n %i\r\n", Get_ref_peak(Period_ref), Get_test_peak(Period_test), phase_diff_int);
+			//handshake button with python: 
+			if (P0_6!=1){
+				printf("1000\r\n");
+				printf("1000\r\n");
+				printf("%f \r\n %f \r\n %i\r\n", Vrms_ref*1.41421356, Vrms_test*1.41421356, phase_diff_int);
+				printf("1001\r\n");
+			}
 			
 			 count=0;
 			 neg_flag=0;
